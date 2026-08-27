@@ -23,10 +23,18 @@ MAP = {
  "airtickets":"page_airtickets", "exit":"page_exit", "leave":"page_leave",
  "vacations":"page_vacations", "insurance":"page_insurance", "support":"page_support",
  "performance":"page_performance",
+ "req_cards":"page_req_cards", "myrequests":"page_myrequests", "otp_login":"page_otp_login",
+ "form_admin":"page_form_admin", "form_insurance":"page_form_insurance",
+ "form_govrelations":"page_form_govrelations", "form_other":"page_form_other",
+ "form_leave":"page_form_leave",
 }
 # sensitive blur rectangles (fractions of the image: l,t,r,b)
 BLUR = {
  "page_myprofile":  [(0.51,0.345,0.60,0.375),(0.705,0.50,0.85,0.535)],  # phone, personal email
+ "page_req_cards":       [(0.40,0.205,0.57,0.26)],                       # ID Number tile
+ "page_form_admin":      [(0.20,0.3225,0.68,0.355)],                     # ID No. + Passport No. row
+ "page_form_govrelations":[(0.20,0.3225,0.68,0.355),(0.20,0.3815,0.68,0.4125)], # ID No. row, Passport No. row
+ "page_form_insurance":  [(0.20,0.3675,0.68,0.405)],                     # ID Number + Birth Date row
  "page_payment":    [(0.21,0.375,0.402,0.955)],                         # beneficiary + amount cols
  "page_statistics": [(0.10,0.725,0.21,0.775)],                          # Current Package amount only
 }
