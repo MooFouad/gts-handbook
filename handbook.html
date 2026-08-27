@@ -74,8 +74,8 @@
   .thumb.on .no{ background:var(--amber); color:#241403; }
   .thumb .tx{ min-width:0; font-family:var(--body); font-weight:600; font-size:11.5px; color:var(--ink); line-height:1.2;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .thumb .ti{ background:var(--paper); }
-  .thumb .ti img{ width:100%; display:block; }
+  .thumb .ti{ background:var(--paper); height:92px; overflow:hidden; }
+  .thumb .ti img{ width:100%; height:100%; display:block; object-fit:cover; object-position:top; }
   .thumb.cover{ background:#1d1813; border-color:#1d1813; }
   .thumb.cover .cv{ padding:20px 14px; min-height:104px; display:flex; flex-direction:column; justify-content:center; }
   .thumb.cover .cv .no{ align-self:flex-start; margin-bottom:9px; background:var(--rail-2); color:var(--amber); }
@@ -235,7 +235,7 @@
 <script>
 const SLIDES = [
  {cover:true, en:{title:"app.gts,<br><em>tab by tab.</em>", sub:"A quick visual guide to app.gts.sa — sign-in, every dashboard tab, and the request portal."},
-              ar:{title:"app.gts،<br><em>خطوة بخطوة.</em>", sub:"دليل مرئي سريع لموقع app.gts.sa — تسجيل الدخول، كل تبويب، وبوابة الطلبات."}},
+              ar:{title:"<bdi>app.gts</bdi>،<br><em>خطوة بخطوة.</em>", sub:"دليل مرئي سريع لموقع <bdi>app.gts.sa</bdi> — تسجيل الدخول، كل تبويب، وبوابة الطلبات."}},
 
  {tag:"Sign in",url:"app.gts.sa/Account/Login",img:"page_login_main",
   en:{title:"Signing in: Email & Password", cap:"Enter your work email and password, then select Sign In."},
@@ -249,7 +249,7 @@ const SLIDES = [
 
  {tag:"Getting started",url:"app.gts.sa",img:"page_dash_full",
   en:{title:"The dashboard — sixteen tabs", cap:"Sign in and you land here. Each card is a tool — select VIEW to open it."},
-  ar:{title:"لوحة التحكم — ستة عشر تبويباً", cap:"بعد تسجيل الدخول تصل إلى هنا. كل بطاقة أداة — اضغط VIEW لفتحها."}},
+  ar:{title:"لوحة التحكم — ستة عشر تبويباً", cap:"بعد تسجيل الدخول تصل إلى هنا. كل بطاقة أداة — اضغط <bdi>VIEW</bdi> لفتحها."}},
 
  {tag:"People & Time",url:"app.gts.sa/employee/MyProfile",img:"page_myprofile",
   en:{title:"My Profile", cap:"Your personal record on file with HR, plus a link into the Employee Requests portal."},
@@ -391,7 +391,7 @@ function renderStage(){
   const s = SLIDES[i], c = s[lang];
   stageEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
   if (s.cover) {
-    const badge = lang === 'ar' ? 'دليل موظفي app.gts' : 'app.gts employee handbook';
+    const badge = lang === 'ar' ? 'دليل موظفي <bdi>app.gts</bdi>' : 'app.gts employee handbook';
     stageEl.innerHTML = `<div class="cover-stage"><div class="box"><span class="badge">${badge}</span><h1>${c.title}</h1><p>${c.sub}</p></div></div>`;
   } else {
     const svc = s.svc ? `<div class="svcgrid">${s.svc.map(x=>{const v=x[lang];return `<div class="svc"><b>${v[0]}</b>${v[1]}</div>`;}).join('')}</div>` : '';
