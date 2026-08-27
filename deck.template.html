@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>app.gts guide — Employee Handbook</title>
-<link rel="icon" type="image/png" id="favicon32">
-<link rel="apple-touch-icon" id="favicon180">
+<link rel="icon" type="image/png" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Readex+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -209,7 +209,7 @@
 
 <div id="rail">
   <div id="rhead">
-    <img class="logo" id="railLogo" alt="GTS">
+    <img class="logo" id="railLogo" src="img/logo.png" alt="GTS">
     <span class="t" id="railTitle">App Guide</span>
   </div>
   <div id="thumbs"></div>
@@ -230,7 +230,6 @@
 </div>
 
 <script>
-const IMG = __IMG__;
 const SLIDES = [
  {cover:true, en:{title:"app.gts,<br><em>tab by tab.</em>", sub:"A quick visual guide to app.gts.sa — sign-in, every dashboard tab, and the request portal."},
               ar:{title:"app.gts،<br><em>خطوة بخطوة.</em>", sub:"دليل مرئي سريع لموقع app.gts.sa — تسجيل الدخول، كل تبويب، وبوابة الطلبات."}},
@@ -319,7 +318,7 @@ function buildThumbs(){
       el.innerHTML = `<div class="cv"><span class="no">${idx+1}</span><b>${c.title}</b></div>`;
     } else {
       const t = c.title.replace(/<[^>]+>/g,'');
-      el.innerHTML = `<div class="tt"><span class="no">${idx+1}</span><span class="tx">${t}</span></div><div class="ti"><img src="${IMG['thumb_'+s.img]}" alt="" loading="lazy"></div>`;
+      el.innerHTML = `<div class="tt"><span class="no">${idx+1}</span><span class="tx">${t}</span></div><div class="ti"><img src="img/thumb_${s.img}.jpg" alt="" loading="lazy"></div>`;
     }
     el.addEventListener('click', () => go(idx));
     thumbsEl.appendChild(el);
@@ -337,7 +336,7 @@ function renderStage(){
     stageEl.innerHTML = `<div class="wrap">
       <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
       <div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>
-        <img src="${IMG[s.img]}" alt="${c.title.replace(/<[^>]+>/g,'')}"></div>
+        <img src="img/${s.img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager"></div>
       ${svc}</div>`;
   }
   stageEl.scrollTop = 0;
@@ -356,9 +355,6 @@ function go(n){
 }
 
 document.getElementById('tot').textContent = SLIDES.length;
-document.getElementById('railLogo').src = IMG.logo;
-document.getElementById('favicon32').href = IMG.favicon32;
-document.getElementById('favicon180').href = IMG.favicon180;
 function applyLangChrome(){
   document.getElementById('railTitle').textContent = lang === 'ar' ? 'دليل التطبيق' : 'App Guide';
 }

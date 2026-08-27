@@ -1,17 +1,20 @@
-"""Build imgmanifest.json from the fresh Playwright captures.
-- downscale to manifest width, blur only genuinely-sensitive regions, regenerate thumbnails.
+"""Build img/ from the fresh Playwright captures.
+- downscale, blur only genuinely-sensitive regions, regenerate thumbnails.
+- writes real image FILES into img/ (not inlined base64) so handbook.html
+  stays tiny and each slide's image is fetched on demand.
 """
-import base64, io, json, os
+import os
 from PIL import Image, ImageFilter
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CAP  = os.path.join(HERE, "captures")
-MANP = os.path.join(HERE, "imgmanifest.json")
-W    = 1500          # manifest image width
-TW   = 250           # thumbnail width
+IMGDIR = os.path.join(HERE, "img")
+os.makedirs(IMGDIR, exist_ok=True)
+W    = 1500          # page image width
+TW   = 250            # thumbnail width
 
-# capture file -> manifest page key
+# capture file -> output key
 MAP = {
  "login_main":"page_login_main", "login_temp":"page_login_temp",
  "dash":"page_dash_full", "myprofile":"page_myprofile", "attendance":"page_attendance",
@@ -37,13 +40,15 @@ def blur(im, rects):
         reg=im.crop((L,T,R,B)).filter(ImageFilter.GaussianBlur(rad))
         im.paste(reg,(L,T))
 
-def enc(im, width, q=88):
+def save(im, path, width, q=88):
     im=im.convert("RGB")
     if im.width!=width: im=im.resize((width,round(im.height*width/im.width)),Image.LANCZOS)
-    bio=io.BytesIO(); im.save(bio,"JPEG",quality=q,optimize=True)
-    return "data:image/jpeg;base64,"+base64.b64encode(bio.getvalue()).decode()
+    im.save(path, "JPEG", quality=q, optimize=True, progressive=True)
 
-man = {}
+def add(key, im):
+    if key in BLUR: blur(im, BLUR[key])
+    save(im, os.path.join(IMGDIR, key+".jpg"), W, 88)
+    save(im, os.path.join(IMGDIR, "thumb_"+key+".jpg"), TW, 72)
 
 # ── logo: crop the "GTS + flag" mark from the horizontal lockup (real alpha
 #    already baked in) — no need to fake transparency, just tight-crop it ──
@@ -61,8 +66,7 @@ mark = mark_area.crop((bx0, by0, bx1, by1))
 pad_x, pad_y = 8, 8
 chip = Image.new("RGBA", (mark.width+pad_x*2, mark.height+pad_y*2), (0,0,0,0))
 chip.paste(mark, (pad_x, pad_y), mark)
-bio = io.BytesIO(); chip.save(bio, "PNG")
-man["logo"] = "data:image/png;base64,"+base64.b64encode(bio.getvalue()).decode()
+chip.save(os.path.join(IMGDIR, "logo.png"))
 
 # ── favicon: the full wordmark is too wide to read at 32px, so use just the
 #    flag-stripe block (the part right of "GTS") — compact, colorful, square-friendly ──
@@ -82,16 +86,8 @@ side = max(flag.width, flag.height)
 fav_pad = int(side * 0.16)
 fav_canvas = Image.new("RGBA", (side + fav_pad*2, side + fav_pad*2), (0,0,0,0))
 fav_canvas.paste(flag, (fav_pad + (side-flag.width)//2, fav_pad + (side-flag.height)//2), flag)
-for size, key in [(32,"favicon32"), (180,"favicon180")]:
-    icon = fav_canvas.resize((size,size), Image.LANCZOS)
-    icon.save(os.path.join(HERE, "assets", f"favicon-{size}.png"))
-    bio = io.BytesIO(); icon.save(bio, "PNG")
-    man[key] = "data:image/png;base64,"+base64.b64encode(bio.getvalue()).decode()
-
-def add(key, im):
-    if key in BLUR: blur(im, BLUR[key])
-    man[key]=enc(im, W)
-    man["thumb_"+key]=enc(im, TW, q=72)
+for size in (32, 180):
+    fav_canvas.resize((size,size), Image.LANCZOS).save(os.path.join(IMGDIR, f"favicon-{size}.png"))
 
 # regular pages
 for f,key in MAP.items():
@@ -121,9 +117,8 @@ payroll_blur = [
  seg_rect(c3,h,   0.475,0.27,0.635,0.91), # summary amount column + total payable
 ]
 blur(im, payroll_blur)
-man["page_payroll"]=enc(im, W)
-man["thumb_page_payroll"]=enc(im, TW, q=72)
+save(im, os.path.join(IMGDIR, "page_payroll.jpg"), W, 88)
+save(im, os.path.join(IMGDIR, "thumb_page_payroll.jpg"), TW, 72)
 print("ok page_payroll (single, full height)", h)
 
-json.dump(man, open(MANP,"w"))
-print("keys:",len(man))
+print("done -> img/")
