@@ -26,7 +26,7 @@ MAP = {
  "req_cards":"page_req_cards", "myrequests":"page_myrequests", "otp_login":"page_otp_login",
  "form_admin":"page_form_admin", "form_insurance":"page_form_insurance",
  "form_govrelations":"page_form_govrelations", "form_other":"page_form_other",
- "form_leave":"page_form_leave",
+ "form_leave":"page_form_leave", "form_chamber":"page_form_chamber",
 }
 # sensitive blur rectangles (fractions of the image: l,t,r,b)
 BLUR = {
