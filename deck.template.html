@@ -123,7 +123,10 @@
   .browser .dots i:nth-child(1){ background:#EC6A5E; } .browser .dots i:nth-child(2){ background:#F4BF4F; } .browser .dots i:nth-child(3){ background:#61C554; }
   .browser .url{ flex:1; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:5px 12px; font-family:var(--mono);
     font-size:12px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .browser img{ display:block; width:100%; height:auto; animation:imgIn .85s cubic-bezier(.2,.7,.2,1) .22s both; }
+  .browser img{ display:block; width:100%; height:auto; min-height:200px; background:linear-gradient(100deg,#F3F0EA 30%,#F9F7F2 50%,#F3F0EA 70%);
+    background-size:200% 100%; animation:imgIn .85s cubic-bezier(.2,.7,.2,1) .22s both, shimmer 1.3s ease-in-out infinite; }
+  .browser img.loaded{ animation:imgIn .85s cubic-bezier(.2,.7,.2,1) .22s both; background:none; min-height:0; }
+  @keyframes shimmer{ 0%{ background-position:200% 0; } 100%{ background-position:-200% 0; } }
 
   .cover-stage{ display:flex; align-items:center; justify-content:center; min-height:74vh; text-align:center; }
   .cover-stage .box{ max-width:660px; animation:rise .9s cubic-bezier(.2,.7,.2,1) both; }
@@ -336,7 +339,7 @@ function renderStage(){
     stageEl.innerHTML = `<div class="wrap">
       <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
       <div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>
-        <img src="img/${s.img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager"></div>
+        <img src="img/${s.img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager" onload="this.classList.add('loaded')"></div>
       ${svc}</div>`;
   }
   stageEl.scrollTop = 0;
