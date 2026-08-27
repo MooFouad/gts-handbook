@@ -104,8 +104,7 @@
   #stage{ flex:1; overflow-y:auto; padding:38px clamp(20px,4.5vw,60px) 72px; scrollbar-width:thin; scrollbar-color:#d8d1c6 transparent;
     scroll-behavior:smooth; }
   #stage::-webkit-scrollbar{ width:11px; } #stage::-webkit-scrollbar-thumb{ background:#dcd4c8; border-radius:10px; border:3px solid var(--stage); }
-  .wrap, .cover-stage{ animation:stageFwd .46s cubic-bezier(.16,.8,.24,1) both; }
-  .wrap.back, .cover-stage.back{ animation-name:stageBack; }
+  .wrap, .cover-stage{ animation:stageIn .46s cubic-bezier(.16,.8,.24,1) both; transform-origin:center; }
   .wrap{ max-width:1160px; margin:0 auto; }
   .head{ margin-bottom:22px; animation:rise .5s cubic-bezier(.2,.7,.2,1) .04s both; }
   .tag{ display:inline-flex; align-items:center; gap:7px; font-family:var(--body); font-size:11px; font-weight:600; letter-spacing:.14em;
@@ -144,10 +143,7 @@
   @keyframes rise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
   @keyframes imgIn{ from{ opacity:0; transform:scale(1.012); } to{ opacity:1; transform:none; } }
   @keyframes thumbPop{ 0%{ transform:scale(1); } 45%{ transform:scale(1.035); } 100%{ transform:scale(1); } }
-  @keyframes stageFwd{ from{ opacity:0; transform:translateX(22px) scale(.986); } to{ opacity:1; transform:none; } }
-  @keyframes stageBack{ from{ opacity:0; transform:translateX(-22px) scale(.986); } to{ opacity:1; transform:none; } }
-  [dir="rtl"] .wrap, [dir="rtl"] .cover-stage{ animation-name:stageBack; }
-  [dir="rtl"] .wrap.back, [dir="rtl"] .cover-stage.back{ animation-name:stageFwd; }
+  @keyframes stageIn{ from{ opacity:0; transform:scale(.965); } to{ opacity:1; transform:none; } }
   @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
 
   /* ── tablet: rail narrows, stays vertical ── */
@@ -327,16 +323,15 @@ function buildThumbs(){
   });
 }
 
-function renderStage(back){
+function renderStage(){
   const s = SLIDES[i], c = s[lang];
   stageEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  const bk = back ? ' back' : '';
   if (s.cover) {
     const badge = lang === 'ar' ? 'دليل موظفي app.gts' : 'app.gts employee handbook';
-    stageEl.innerHTML = `<div class="cover-stage${bk}"><div class="box"><span class="badge">${badge}</span><h1>${c.title}</h1><p>${c.sub}</p></div></div>`;
+    stageEl.innerHTML = `<div class="cover-stage"><div class="box"><span class="badge">${badge}</span><h1>${c.title}</h1><p>${c.sub}</p></div></div>`;
   } else {
     const svc = s.svc ? `<div class="svcgrid">${s.svc.map(x=>{const v=x[lang];return `<div class="svc"><b>${v[0]}</b>${v[1]}</div>`;}).join('')}</div>` : '';
-    stageEl.innerHTML = `<div class="wrap${bk}">
+    stageEl.innerHTML = `<div class="wrap">
       <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
       <div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>
         <img src="${IMG[s.img]}" alt="${c.title.replace(/<[^>]+>/g,'')}"></div>
@@ -346,9 +341,7 @@ function renderStage(back){
 }
 
 function go(n){
-  const prevI = i;
   i = Math.max(0, Math.min(SLIDES.length - 1, n));
-  const back = i < prevI;
   [...thumbsEl.children].forEach((t, idx) => t.classList.toggle('on', idx === i));
   const active = thumbsEl.children[i];
   if (active) active.scrollIntoView({ block:'nearest', behavior:'smooth' });
@@ -356,7 +349,7 @@ function go(n){
   document.getElementById('prev').disabled = i === 0;
   document.getElementById('next').disabled = i === SLIDES.length - 1;
   document.getElementById('pbarFill').style.width = ((i + 1) / SLIDES.length * 100) + '%';
-  renderStage(back);
+  renderStage();
 }
 
 document.getElementById('tot').textContent = SLIDES.length;
