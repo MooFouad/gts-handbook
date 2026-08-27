@@ -33,10 +33,9 @@
     border-right:1px solid var(--line);
   }
   #rhead{ display:flex; align-items:center; gap:10px; padding:16px 16px 14px; border-bottom:1px solid var(--line); }
-  #rhead .logo{ height:32px; width:auto; flex:0 0 auto; border-radius:8px; background:#fff; border:1px solid var(--line);
-    box-shadow:0 1px 2px rgba(28,25,23,.06), 0 4px 12px rgba(28,25,23,.08); }
-  #rhead .t{ font-family:var(--disp); font-weight:700; font-size:14.5px; letter-spacing:-.01em; color:var(--ink); line-height:1.05; }
-  #rhead .t small{ display:block; font-family:var(--body); font-weight:400; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-top:2px; }
+  #rhead .logo{ height:30px; width:auto; flex:0 0 auto;
+    filter:drop-shadow(0 1px 1px rgba(28,25,23,.14)) drop-shadow(0 3px 7px rgba(28,25,23,.10)); }
+  #rhead .t{ font-family:var(--body); font-weight:600; font-size:13px; letter-spacing:.02em; color:var(--ink-2); }
   #vhead .lang{ appearance:none; cursor:pointer; border:none; background:var(--rail); width:auto; height:auto;
     color:var(--rail-ink); border-radius:999px; padding:8px 18px 8px 16px; font-family:var(--body); font-size:12px; font-weight:600;
     letter-spacing:.03em; display:inline-flex; align-items:center; gap:7px; box-shadow:0 1px 2px rgba(28,25,23,.06), 0 4px 12px rgba(28,25,23,.10);
@@ -61,8 +60,11 @@
     box-shadow:inset 0 0 0 2px transparent; transition:box-shadow .2s; }
   .thumb:hover{ transform:translateX(4px); box-shadow:0 5px 16px rgba(28,25,23,.14); }
   [dir="rtl"] .thumb:hover{ transform:translateX(-4px); }
-  .thumb.on{ border-color:var(--amber); box-shadow:0 6px 18px rgba(28,25,23,.16), 0 0 0 1px var(--amber); }
+  .thumb:active{ transform:translateX(4px) scale(.97); }
+  [dir="rtl"] .thumb:active{ transform:translateX(-4px) scale(.97); }
+  .thumb.on{ border-color:var(--amber); box-shadow:0 6px 18px rgba(28,25,23,.16), 0 0 0 1px var(--amber); animation:thumbPop .38s cubic-bezier(.34,1.4,.5,1); }
   .thumb.on::after{ box-shadow:inset 0 0 0 2px var(--amber); }
+  .thumb .no{ transition:background .2s, color .2s; }
   .thumb .tt{ display:flex; align-items:center; gap:8px; padding:9px 11px 8px; background:var(--paper); border-bottom:1px solid var(--line); }
   .thumb .no{ flex:0 0 auto; min-width:19px; height:19px; padding:0 5px; border-radius:6px; background:var(--ink);
     color:#fff; font-family:var(--disp); font-weight:700; font-size:10px; display:flex; align-items:center; justify-content:center; }
@@ -88,14 +90,24 @@
   #vhead .vbrand{ display:none; font-family:var(--disp); font-weight:700; font-size:13px; color:var(--ink); letter-spacing:-.01em; }
   #vhead .navbtns{ display:flex; gap:9px; }
   #vhead button{ appearance:none; width:38px; height:34px; border:1px solid var(--line-strong); background:var(--paper); color:var(--ink);
-    border-radius:9px; font-size:17px; line-height:1; cursor:pointer; transition:.16s; }
+    border-radius:9px; font-size:17px; line-height:1; cursor:pointer; transition:transform .12s ease, border-color .16s, color .16s, background .16s; }
   #vhead button:hover:not(:disabled){ border-color:var(--amber); color:var(--amber-deep); background:var(--amber-soft); }
+  #vhead button:active:not(:disabled){ transform:scale(.90); }
   #vhead button:disabled{ opacity:.32; cursor:default; }
+  #vhead .lang:active{ transform:translateY(0) scale(.96); }
 
-  #stage{ flex:1; overflow-y:auto; padding:38px clamp(20px,4.5vw,60px) 72px; scrollbar-width:thin; scrollbar-color:#d8d1c6 transparent; }
+  /* ── read progress ── */
+  #pbar{ height:2.5px; flex:0 0 auto; background:var(--line); overflow:hidden; }
+  #pbarFill{ display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--amber),var(--amber-deep));
+    transition:width .5s cubic-bezier(.22,.75,.28,1); box-shadow:0 0 10px rgba(224,138,30,.5); }
+
+  #stage{ flex:1; overflow-y:auto; padding:38px clamp(20px,4.5vw,60px) 72px; scrollbar-width:thin; scrollbar-color:#d8d1c6 transparent;
+    scroll-behavior:smooth; }
   #stage::-webkit-scrollbar{ width:11px; } #stage::-webkit-scrollbar-thumb{ background:#dcd4c8; border-radius:10px; border:3px solid var(--stage); }
+  .wrap, .cover-stage{ animation:stageFwd .46s cubic-bezier(.16,.8,.24,1) both; }
+  .wrap.back, .cover-stage.back{ animation-name:stageBack; }
   .wrap{ max-width:1160px; margin:0 auto; }
-  .head{ margin-bottom:22px; animation:rise .5s cubic-bezier(.2,.7,.2,1) both; }
+  .head{ margin-bottom:22px; animation:rise .5s cubic-bezier(.2,.7,.2,1) .04s both; }
   .tag{ display:inline-flex; align-items:center; gap:7px; font-family:var(--body); font-size:11px; font-weight:600; letter-spacing:.14em;
     text-transform:uppercase; color:var(--amber-deep); margin-bottom:12px; }
   .tag::before{ content:""; width:16px; height:2px; background:var(--amber); border-radius:2px; }
@@ -109,7 +121,7 @@
   .browser .dots i:nth-child(1){ background:#EC6A5E; } .browser .dots i:nth-child(2){ background:#F4BF4F; } .browser .dots i:nth-child(3){ background:#61C554; }
   .browser .url{ flex:1; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:5px 12px; font-family:var(--mono);
     font-size:12px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .browser img{ display:block; width:100%; height:auto; }
+  .browser img{ display:block; width:100%; height:auto; animation:imgIn .55s cubic-bezier(.2,.7,.2,1) .16s both; }
 
   .cover-stage{ display:flex; align-items:center; justify-content:center; min-height:74vh; text-align:center; }
   .cover-stage .box{ max-width:660px; animation:rise .6s cubic-bezier(.2,.7,.2,1) both; }
@@ -130,6 +142,12 @@
   [dir="rtl"] .svc b{ font-family:var(--body); font-weight:700; letter-spacing:0; }
 
   @keyframes rise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+  @keyframes imgIn{ from{ opacity:0; transform:scale(1.012); } to{ opacity:1; transform:none; } }
+  @keyframes thumbPop{ 0%{ transform:scale(1); } 45%{ transform:scale(1.035); } 100%{ transform:scale(1); } }
+  @keyframes stageFwd{ from{ opacity:0; transform:translateX(22px) scale(.986); } to{ opacity:1; transform:none; } }
+  @keyframes stageBack{ from{ opacity:0; transform:translateX(-22px) scale(.986); } to{ opacity:1; transform:none; } }
+  [dir="rtl"] .wrap, [dir="rtl"] .cover-stage{ animation-name:stageBack; }
+  [dir="rtl"] .wrap.back, [dir="rtl"] .cover-stage.back{ animation-name:stageFwd; }
   @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
 
   /* ── tablet: rail narrows, stays vertical ── */
@@ -193,7 +211,7 @@
 <div id="rail">
   <div id="rhead">
     <img class="logo" id="railLogo" alt="GTS">
-    <span class="t">app.gts guide<small id="railSub">Employee Handbook</small></span>
+    <span class="t" id="railTitle">Guide</span>
   </div>
   <div id="thumbs"></div>
 </div>
@@ -208,6 +226,7 @@
       <button id="next" aria-label="Next">›</button>
     </div>
   </div>
+  <div id="pbar"><i id="pbarFill"></i></div>
   <div id="stage"></div>
 </div>
 
@@ -308,15 +327,16 @@ function buildThumbs(){
   });
 }
 
-function renderStage(){
+function renderStage(back){
   const s = SLIDES[i], c = s[lang];
   stageEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  const bk = back ? ' back' : '';
   if (s.cover) {
     const badge = lang === 'ar' ? 'دليل موظفي app.gts' : 'app.gts employee handbook';
-    stageEl.innerHTML = `<div class="cover-stage"><div class="box"><span class="badge">${badge}</span><h1>${c.title}</h1><p>${c.sub}</p></div></div>`;
+    stageEl.innerHTML = `<div class="cover-stage${bk}"><div class="box"><span class="badge">${badge}</span><h1>${c.title}</h1><p>${c.sub}</p></div></div>`;
   } else {
     const svc = s.svc ? `<div class="svcgrid">${s.svc.map(x=>{const v=x[lang];return `<div class="svc"><b>${v[0]}</b>${v[1]}</div>`;}).join('')}</div>` : '';
-    stageEl.innerHTML = `<div class="wrap">
+    stageEl.innerHTML = `<div class="wrap${bk}">
       <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
       <div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>
         <img src="${IMG[s.img]}" alt="${c.title.replace(/<[^>]+>/g,'')}"></div>
@@ -326,20 +346,23 @@ function renderStage(){
 }
 
 function go(n){
+  const prevI = i;
   i = Math.max(0, Math.min(SLIDES.length - 1, n));
+  const back = i < prevI;
   [...thumbsEl.children].forEach((t, idx) => t.classList.toggle('on', idx === i));
   const active = thumbsEl.children[i];
   if (active) active.scrollIntoView({ block:'nearest', behavior:'smooth' });
   document.getElementById('cur').textContent = i + 1;
   document.getElementById('prev').disabled = i === 0;
   document.getElementById('next').disabled = i === SLIDES.length - 1;
-  renderStage();
+  document.getElementById('pbarFill').style.width = ((i + 1) / SLIDES.length * 100) + '%';
+  renderStage(back);
 }
 
 document.getElementById('tot').textContent = SLIDES.length;
 document.getElementById('railLogo').src = IMG.logo;
 function applyLangChrome(){
-  document.getElementById('railSub').textContent = lang === 'ar' ? 'دليل الموظف' : 'Employee Handbook';
+  document.getElementById('railTitle').textContent = lang === 'ar' ? 'دليل' : 'Guide';
 }
 applyLangChrome();
 document.getElementById('prev').addEventListener('click', () => go(i - 1));

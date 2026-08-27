@@ -45,21 +45,27 @@ def enc(im, width, q=88):
 
 man = {}
 
-# ── logo: tight-crop the GTS + flag mark (auto-bbox, no excess canvas), soft card ──
+# ── logo: tight-crop the GTS + flag mark, key out the white background to
+#    real alpha transparency (soft-edged) so it floats on the rail with no box ──
 LOGO = os.path.join(HERE, "assets", "gts-logo.png")
 lg = Image.open(LOGO).convert("RGB")
 lw, lh = lg.size
-top = lg.crop((0, 0, lw, int(lh*0.47)))          # GTS wordmark + flag stripes only
+top = lg.crop((0, 0, lw, int(lh*0.54)))          # GTS wordmark + flag stripes only (full diagonal tips, stops before the text line)
 ta = np.asarray(top)
 mask = ta.min(axis=2) < 235
 ys, xs = np.where(mask)
 m = 10                                            # tight margin around the ink
 bx0, bx1 = max(0, xs.min()-m), min(top.width, xs.max()+m)
 by0, by1 = max(0, ys.min()-m), min(top.height, ys.max()+m)
-mark = top.crop((bx0, by0, bx1, by1))
-pad_x, pad_y = 22, 16
-chip = Image.new("RGB", (mark.width+pad_x*2, mark.height+pad_y*2), (255,255,255))
-chip.paste(mark, (pad_x, pad_y))
+mark = top.crop((bx0, by0, bx1, by1)).convert("RGBA")
+arr = np.asarray(mark).astype(np.float32)
+mean = arr[..., :3].mean(axis=2)
+alpha = np.clip((250.0 - mean) / (250.0 - 200.0), 0.0, 1.0) * 255.0
+arr[..., 3] = alpha
+mark = Image.fromarray(arr.astype("uint8"), "RGBA")
+pad_x, pad_y = 8, 8
+chip = Image.new("RGBA", (mark.width+pad_x*2, mark.height+pad_y*2), (0,0,0,0))
+chip.paste(mark, (pad_x, pad_y), mark)
 bio = io.BytesIO(); chip.save(bio, "PNG")
 man["logo"] = "data:image/png;base64,"+base64.b64encode(bio.getvalue()).decode()
 
