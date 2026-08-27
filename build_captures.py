@@ -27,6 +27,7 @@ MAP = {
  "form_admin":"page_form_admin", "form_insurance":"page_form_insurance",
  "form_govrelations":"page_form_govrelations", "form_other":"page_form_other",
  "form_leave":"page_form_leave", "form_chamber":"page_form_chamber",
+ "pay_form":"page_pay_create", "pay_list":"page_pay_attach",
 }
 # sensitive blur rectangles (fractions of the image: l,t,r,b)
 BLUR = {
@@ -36,6 +37,8 @@ BLUR = {
  "page_form_govrelations":[(0.20,0.3225,0.68,0.355),(0.20,0.3815,0.68,0.4125)], # ID No. row, Passport No. row
  "page_form_insurance":  [(0.20,0.3675,0.68,0.405)],                     # ID Number + Birth Date row
  "page_payment":    [(0.21,0.375,0.402,0.955)],                         # beneficiary + amount cols
+ "page_pay_attach": [(0.21,0.375,0.402,0.955)],                         # beneficiary + amount cols (same list)
+ "page_pay_create": [(0.20,0.545,0.405,0.99)],                          # list rows visible below the create dialog
  "page_statistics": [(0.10,0.725,0.21,0.775)],                          # Current Package amount only
 }
 

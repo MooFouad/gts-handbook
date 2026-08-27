@@ -128,6 +128,28 @@
   .browser img.loaded{ animation:imgIn .85s cubic-bezier(.2,.7,.2,1) .22s both; background:none; min-height:0; }
   @keyframes shimmer{ 0%{ background-position:200% 0; } 100%{ background-position:-200% 0; } }
 
+  /* ── step-by-step arrow annotations over a screenshot ── */
+  .browser .shot{ position:relative; line-height:0; }
+  .browser .shot > img{ position:relative; z-index:0; }
+  .ann{ position:absolute; inset:0; width:100%; height:100%; z-index:2; pointer-events:none; overflow:visible; }
+  .ann line{ stroke:#E4002B; stroke-width:2.4px; vector-effect:non-scaling-stroke; stroke-linecap:round; }
+  .marks{ position:absolute; inset:0; z-index:3; pointer-events:none; }
+  .marks .tip{ position:absolute; width:0; height:0; border-left:14px solid #E4002B; border-top:8px solid transparent;
+    border-bottom:8px solid transparent; filter:drop-shadow(0 1px 2px rgba(0,0,0,.35)); }
+  .marks .hint{ position:absolute; width:30px; height:30px; margin:-15px 0 0 -15px; border-radius:50%;
+    background:#E4002B; color:#fff; font-family:var(--disp); font-weight:800; font-size:15px; line-height:30px; text-align:center;
+    box-shadow:0 0 0 3px #fff, 0 3px 9px rgba(228,0,43,.5); animation:hintPop .5s cubic-bezier(.34,1.5,.5,1) both; }
+  @keyframes hintPop{ 0%{ transform:scale(0); } 60%{ transform:scale(1.15); } 100%{ transform:scale(1); } }
+
+  ol.steps{ list-style:none; counter-reset:st; margin:26px auto 0; padding:0; max-width:960px; display:grid; gap:11px;
+    animation:rise .8s cubic-bezier(.2,.7,.2,1) .18s both; }
+  ol.steps li{ display:flex; align-items:flex-start; gap:13px; font-size:15px; color:var(--ink-2); line-height:1.5; }
+  ol.steps li .sn{ flex:0 0 auto; width:27px; height:27px; border-radius:50%; background:#E4002B; color:#fff;
+    font-family:var(--disp); font-weight:800; font-size:13.5px; display:flex; align-items:center; justify-content:center; margin-top:1px;
+    box-shadow:0 2px 6px rgba(228,0,43,.35); }
+  ol.steps li b{ color:var(--ink); font-weight:600; }
+  [dir="rtl"] ol.steps li{ text-align:right; }
+
   .cover-stage{ display:flex; align-items:center; justify-content:center; min-height:74vh; text-align:center; }
   .cover-stage .box{ max-width:660px; animation:rise .9s cubic-bezier(.2,.7,.2,1) both; }
   .cover-stage .badge{ display:inline-flex; align-items:center; gap:8px; font-family:var(--body); font-size:12px; font-weight:600;
@@ -267,6 +289,24 @@ const SLIDES = [
  {tag:"Money",url:"app.gts.sa/employee/paymentrequests",img:"page_payment",
   en:{title:"Payment Requests", cap:"Reimbursement requests and where each one stands in approval."},
   ar:{title:"طلبات الصرف", cap:"طلبات استرداد المصروفات وحالتها في مسار الاعتماد."}},
+ {tag:"How to",url:"app.gts.sa/employee/paymentrequests",img:"page_pay_create",
+  en:{title:"Create a payment request", cap:"Follow the numbered steps — the red arrows point to each field."},
+  ar:{title:"إنشاء طلب صرف", cap:"اتّبع الخطوات المرقّمة — الأسهم الحمراء تشير إلى كل حقل."},
+  steps:[
+   {n:1, tx:87, ty:30, bx:75, by:22, en:"Click the <b>+</b> icon to start a new payment request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب صرف جديد."},
+   {n:2, tx:48.6, ty:16.8, bx:15, by:16.8, en:"Select the <b>Beneficiary</b> — or add a new one (the person icon) if you have access.", ar:"اختر <b>المستفيد</b> — أو أضف مستفيداً جديداً (أيقونة الشخص) إن كانت لديك الصلاحية."},
+   {n:3, tx:50, ty:22.8, bx:15, by:22.8, en:"Select the <b>Department</b>.", ar:"اختر <b>القسم</b>."},
+   {n:4, tx:31.7, ty:28.8, bx:15, by:28.8, en:"Enter the <b>Amount</b>.", ar:"أدخل <b>المبلغ</b>."},
+   {n:5, tx:50, ty:34.8, bx:15, by:34.8, en:"Describe the reason for the request in <b>Description</b>.", ar:"اكتب سبب الطلب في حقل <b>الوصف</b>."},
+   {n:6, tx:48.6, ty:39.4, bx:15, by:39.4, en:"In <b>Account</b>, select the department that will bear the cost.", ar:"في حقل <b>الحساب</b>، اختر القسم الذي سيتحمل التكلفة."},
+   {n:7, tx:71.5, ty:56.8, bx:87, by:62, en:"Click <b>ADD</b> — the request now appears in your Payment Requests list.", ar:"اضغط <b>ADD</b> — سيظهر الطلب في قائمة طلبات الصرف."},
+  ]},
+ {tag:"How to",url:"app.gts.sa/employee/paymentrequests",img:"page_pay_attach",
+  en:{title:"Attach the scan", cap:"After the request is created, add its supporting file from the list."},
+  ar:{title:"إرفاق المستند", cap:"بعد إنشاء الطلب، أرفق المستند الداعم من القائمة."},
+  steps:[
+   {n:8, tx:61, ty:39, bx:78, by:33, en:"Click the <b>+</b> icon in the <b>Scan</b> column to attach your file to the request.", ar:"اضغط على أيقونة <b>+</b> في عمود <b>Scan</b> لإرفاق ملفك بالطلب."},
+  ]},
  {tag:"Money",url:"app.gts.sa/Employee/Payroll",img:"page_payroll",
   en:{title:"Payroll", cap:"Your full salary breakdown — attendance, deductions, daily rates, and the payable total."},
   ar:{title:"كشف الرواتب", cap:"تفاصيل راتبك كاملة — الحضور، الخصومات، المعدلات اليومية، والإجمالي المستحق."}},
@@ -277,9 +317,6 @@ const SLIDES = [
  {tag:"Travel & Mobility",url:"app.gts.sa/Employee/BusinessTripRequests",img:"page_businesstrips",
   en:{title:"Business Trips", cap:"Request company travel and follow it through approval."},
   ar:{title:"رحلات العمل", cap:"طلب سفر رسمي ومتابعته حتى الاعتماد."}},
- {tag:"Travel & Mobility",url:"app.gts.sa/employee/tdys",img:"page_tdy",
-  en:{title:"TDY", cap:"Temporary duty assignments away from your base site."},
-  ar:{title:"الانتدابات", cap:"مهام عمل مؤقتة خارج موقعك الأساسي."}},
  {tag:"Travel & Mobility",url:"app.gts.sa/Employee/AirTickets",img:"page_airtickets",
   en:{title:"Air Tickets", cap:"Flight bookings tied to your business travel."},
   ar:{title:"تذاكر الطيران", cap:"حجوزات الطيران المرتبطة برحلات العمل."}},
@@ -395,11 +432,25 @@ function renderStage(){
     stageEl.innerHTML = `<div class="cover-stage"><div class="box"><span class="badge">${badge}</span><h1>${c.title}</h1><p>${c.sub}</p></div></div>`;
   } else {
     const svc = s.svc ? `<div class="svcgrid">${s.svc.map(x=>{const v=x[lang];return `<div class="svc"><b>${v[0]}</b>${v[1]}</div>`;}).join('')}</div>` : '';
+    let ann = '', stepsList = '';
+    if (s.steps && s.steps.length) {
+      const lines = s.steps.map(p => `<line x1="${p.bx}" y1="${p.by}" x2="${p.tx}" y2="${p.ty}"></line>`).join('');
+      const marks = s.steps.map(p => {
+        const a = Math.atan2(p.ty - p.by, p.tx - p.bx) * 180 / Math.PI;
+        return `<div class="tip" style="left:${p.tx}%;top:${p.ty}%;transform:translate(0,-50%) rotate(${a}deg);transform-origin:0 50%"></div>`
+             + `<div class="hint" style="left:${p.bx}%;top:${p.by}%">${p.n}</div>`;
+      }).join('');
+      ann = `<svg class="ann" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg><div class="marks">${marks}</div>`;
+      stepsList = `<ol class="steps">${s.steps.map(p => `<li><span class="sn">${p.n}</span><span>${p[lang]}</span></li>`).join('')}</ol>`;
+    }
+    const imgWrap = ann
+      ? `<div class="shot"><img src="img/${s.img}.jpg" alt="" loading="eager" onload="this.classList.add('loaded')">${ann}</div>`
+      : `<img src="img/${s.img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager" onload="this.classList.add('loaded')">`;
     stageEl.innerHTML = `<div class="wrap">
       <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
       <div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>
-        <img src="img/${s.img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager" onload="this.classList.add('loaded')"></div>
-      ${svc}</div>`;
+        ${imgWrap}</div>
+      ${stepsList}${svc}</div>`;
   }
   stageEl.scrollTop = 0;
 }
