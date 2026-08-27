@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>app.gts guide — Employee Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Readex+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF; --stage:#F8F6F2; --ink:#1C1917; --ink-2:#57514B; --ink-3:#948C82;
+    --line:#EAE6DF; --line-strong:#DDD6CB;
+    --amber:#E08A1E; --amber-deep:#B96D0C; --amber-soft:#FBEEDA;
+    --rail:#161310; --rail-2:#211C17; --rail-line:#332C23; --rail-ink:#F0EBE3; --rail-ink-2:#988F84;
+    --disp:"Bricolage Grotesque",system-ui,sans-serif;
+    --body:"Readex Pro",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --shadow:0 1px 2px rgba(28,25,23,.05), 0 8px 22px rgba(28,25,23,.08), 0 28px 60px rgba(28,25,23,.09);
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; display:flex; overflow:hidden; background:var(--stage); color:var(--ink);
+    font-family:var(--body); font-weight:400; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  ::selection{ background:var(--amber-soft); color:var(--amber-deep); }
+
+  /* ── thumbnail rail ── */
+  #rail{
+    flex:0 0 264px; height:100vh; display:flex; flex-direction:column; overflow:hidden;
+    background:var(--stage);
+    border-right:1px solid var(--line);
+  }
+  #rhead{ display:flex; align-items:center; gap:10px; padding:16px 16px 14px; border-bottom:1px solid var(--line); }
+  #rhead .logo{ height:32px; width:auto; flex:0 0 auto; border-radius:8px; background:#fff; border:1px solid var(--line);
+    box-shadow:0 1px 2px rgba(28,25,23,.06), 0 4px 12px rgba(28,25,23,.08); }
+  #rhead .t{ font-family:var(--disp); font-weight:700; font-size:14.5px; letter-spacing:-.01em; color:var(--ink); line-height:1.05; }
+  #rhead .t small{ display:block; font-family:var(--body); font-weight:400; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-top:2px; }
+  #vhead .lang{ appearance:none; cursor:pointer; border:none; background:var(--rail); width:auto; height:auto;
+    color:var(--rail-ink); border-radius:999px; padding:8px 18px 8px 16px; font-family:var(--body); font-size:12px; font-weight:600;
+    letter-spacing:.03em; display:inline-flex; align-items:center; gap:7px; box-shadow:0 1px 2px rgba(28,25,23,.06), 0 4px 12px rgba(28,25,23,.10);
+    transition:transform .16s ease, box-shadow .16s ease, background .16s ease; }
+  #vhead .lang::before{ content:""; width:14px; height:14px; flex:0 0 auto; border-radius:50%;
+    background:conic-gradient(from 200deg, var(--amber), var(--amber-deep) 40%, var(--amber) 75%, var(--amber-deep));
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.18); }
+  #vhead .lang:hover{ background:#000; box-shadow:0 2px 4px rgba(28,25,23,.10), 0 6px 18px rgba(28,25,23,.16); transform:translateY(-1px); }
+  #vhead .lang:active{ transform:translateY(0); }
+  [dir="rtl"] #vhead .lang{ padding:8px 16px 8px 18px; }
+
+  #thumbs{ flex:1 1 auto; min-height:0; overflow-y:scroll; padding:14px 14px 24px; display:flex; flex-direction:column; gap:13px;
+    scrollbar-width:thin; scrollbar-color:#d8d1c6 transparent; }
+  #thumbs::-webkit-scrollbar{ width:10px; }
+  #thumbs::-webkit-scrollbar-thumb{ background:#dcd4c8; border-radius:10px; border:3px solid var(--stage); }
+  #thumbs::-webkit-scrollbar-thumb:hover{ background:#cfc5b6; }
+
+  .thumb{ flex:0 0 auto; position:relative; cursor:pointer; border-radius:9px; overflow:hidden;
+    background:var(--paper); border:1px solid var(--line-strong); box-shadow:0 1px 2px rgba(28,25,23,.05), 0 3px 8px rgba(28,25,23,.07);
+    transition:transform .2s cubic-bezier(.34,1.3,.6,1), box-shadow .2s, border-color .2s; }
+  .thumb::after{ content:""; position:absolute; inset:0; border-radius:9px; pointer-events:none;
+    box-shadow:inset 0 0 0 2px transparent; transition:box-shadow .2s; }
+  .thumb:hover{ transform:translateX(4px); box-shadow:0 5px 16px rgba(28,25,23,.14); }
+  [dir="rtl"] .thumb:hover{ transform:translateX(-4px); }
+  .thumb.on{ border-color:var(--amber); box-shadow:0 6px 18px rgba(28,25,23,.16), 0 0 0 1px var(--amber); }
+  .thumb.on::after{ box-shadow:inset 0 0 0 2px var(--amber); }
+  .thumb .tt{ display:flex; align-items:center; gap:8px; padding:9px 11px 8px; background:var(--paper); border-bottom:1px solid var(--line); }
+  .thumb .no{ flex:0 0 auto; min-width:19px; height:19px; padding:0 5px; border-radius:6px; background:var(--ink);
+    color:#fff; font-family:var(--disp); font-weight:700; font-size:10px; display:flex; align-items:center; justify-content:center; }
+  .thumb.on .no{ background:var(--amber); color:#241403; }
+  .thumb .tx{ min-width:0; font-family:var(--body); font-weight:600; font-size:11.5px; color:var(--ink); line-height:1.2;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .thumb .ti{ background:var(--paper); }
+  .thumb .ti img{ width:100%; display:block; }
+  .thumb.cover{ background:#1d1813; border-color:#1d1813; }
+  .thumb.cover .cv{ padding:20px 14px; min-height:104px; display:flex; flex-direction:column; justify-content:center; }
+  .thumb.cover .cv .no{ align-self:flex-start; margin-bottom:9px; background:var(--rail-2); color:var(--amber); }
+  .thumb.cover .cv b{ font-family:var(--disp); font-weight:700; font-size:14px; color:#fff; line-height:1.25; letter-spacing:-.01em; }
+  .thumb.cover .cv em{ font-style:normal; color:var(--amber); }
+
+  /* ── main viewer ── */
+  #viewer{ flex:1; min-width:0; height:100vh; display:flex; flex-direction:column; background:var(--stage);
+    background-image:radial-gradient(1000px 460px at 80% -12%, rgba(224,138,30,.06), transparent 60%); }
+  #vhead{ flex:0 0 auto; height:56px; display:flex; align-items:center; gap:16px; padding:0 clamp(20px,4vw,44px);
+    border-bottom:1px solid var(--line); background:rgba(248,246,242,.72); backdrop-filter:blur(8px); }
+  #vhead .counter{ font-family:var(--disp); font-weight:700; font-size:14px; color:var(--ink); font-variant-numeric:tabular-nums; }
+  #vhead .counter span{ color:var(--ink-3); }
+  #vhead .counter{ margin-inline-end:auto; }
+  #vhead .vbrand{ display:none; font-family:var(--disp); font-weight:700; font-size:13px; color:var(--ink); letter-spacing:-.01em; }
+  #vhead .navbtns{ display:flex; gap:9px; }
+  #vhead button{ appearance:none; width:38px; height:34px; border:1px solid var(--line-strong); background:var(--paper); color:var(--ink);
+    border-radius:9px; font-size:17px; line-height:1; cursor:pointer; transition:.16s; }
+  #vhead button:hover:not(:disabled){ border-color:var(--amber); color:var(--amber-deep); background:var(--amber-soft); }
+  #vhead button:disabled{ opacity:.32; cursor:default; }
+
+  #stage{ flex:1; overflow-y:auto; padding:38px clamp(20px,4.5vw,60px) 72px; scrollbar-width:thin; scrollbar-color:#d8d1c6 transparent; }
+  #stage::-webkit-scrollbar{ width:11px; } #stage::-webkit-scrollbar-thumb{ background:#dcd4c8; border-radius:10px; border:3px solid var(--stage); }
+  .wrap{ max-width:1160px; margin:0 auto; }
+  .head{ margin-bottom:22px; animation:rise .5s cubic-bezier(.2,.7,.2,1) both; }
+  .tag{ display:inline-flex; align-items:center; gap:7px; font-family:var(--body); font-size:11px; font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--amber-deep); margin-bottom:12px; }
+  .tag::before{ content:""; width:16px; height:2px; background:var(--amber); border-radius:2px; }
+  h1{ font-family:var(--disp); font-size:clamp(26px,3.3vw,40px); line-height:1.04; margin:0 0 9px; font-weight:700; letter-spacing:-.025em; }
+  [dir="rtl"] h1{ font-family:var(--body); font-weight:700; letter-spacing:0; }
+  p.cap{ font-size:15.5px; color:var(--ink-2); margin:0; line-height:1.55; max-width:76ch; font-weight:400; }
+  .browser{ background:var(--paper); border:1px solid var(--line); border-radius:15px; overflow:hidden; box-shadow:var(--shadow);
+    animation:rise .55s cubic-bezier(.2,.7,.2,1) .07s both; }
+  .browser .bar{ display:flex; align-items:center; gap:9px; padding:11px 14px; border-bottom:1px solid var(--line); background:#FBFAF7; }
+  .browser .dots{ display:flex; gap:6px; } .browser .dots i{ width:11px; height:11px; border-radius:50%; display:block; }
+  .browser .dots i:nth-child(1){ background:#EC6A5E; } .browser .dots i:nth-child(2){ background:#F4BF4F; } .browser .dots i:nth-child(3){ background:#61C554; }
+  .browser .url{ flex:1; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:5px 12px; font-family:var(--mono);
+    font-size:12px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .browser img{ display:block; width:100%; height:auto; }
+
+  .cover-stage{ display:flex; align-items:center; justify-content:center; min-height:74vh; text-align:center; }
+  .cover-stage .box{ max-width:660px; animation:rise .6s cubic-bezier(.2,.7,.2,1) both; }
+  .cover-stage .badge{ display:inline-flex; align-items:center; gap:8px; font-family:var(--body); font-size:12px; font-weight:600;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--amber-deep); background:var(--amber-soft); padding:7px 16px; border-radius:30px; margin-bottom:22px; }
+  .cover-stage h1{ font-family:var(--disp); font-size:clamp(34px,5.6vw,64px); line-height:1.02; margin:0 0 16px; font-weight:800; letter-spacing:-.035em; }
+  [dir="rtl"] .cover-stage h1{ font-family:var(--body); letter-spacing:0; }
+  .cover-stage h1 em{ font-style:normal; color:var(--amber); }
+  .cover-stage p{ font-size:17px; color:var(--ink-2); line-height:1.6; margin:0 auto; max-width:52ch; }
+
+  .svcgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; animation:rise .55s cubic-bezier(.2,.7,.2,1) .12s both; }
+  @media (max-width:900px){ .svcgrid{ grid-template-columns:1fr 1fr; } }
+  .svc{ background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:14px 15px; font-size:13px; color:var(--ink-2); line-height:1.45;
+    position:relative; overflow:hidden; }
+  .svc::before{ content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--amber); opacity:.55; }
+  [dir="rtl"] .svc::before{ inset:0 0 0 auto; }
+  .svc b{ display:block; font-family:var(--disp); font-weight:600; color:var(--ink); font-size:14px; margin-bottom:3px; letter-spacing:-.01em; }
+  [dir="rtl"] .svc b{ font-family:var(--body); font-weight:700; letter-spacing:0; }
+
+  @keyframes rise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+
+  /* ── tablet: rail narrows, stays vertical ── */
+  @media (max-width:900px) and (min-width:761px){
+    #rail{ flex-basis:210px; }
+    .thumb .tx{ font-size:10.5px; }
+  }
+
+  /* ── phone/narrow: rail becomes a horizontal scroll-strip on top ── */
+  @media (max-width:760px){
+    body{ flex-direction:column; }
+    #rail{ order:2; flex:0 0 auto; width:100%; height:auto; max-height:112px; flex-direction:row; align-items:stretch;
+      border-right:none; border-top:1px solid var(--line); border-bottom:none;
+      box-shadow:0 -6px 18px rgba(28,25,23,.07); }
+    #rhead{ display:none; }
+    #thumbs{ flex:1 1 auto; flex-direction:row; align-items:center; overflow-x:auto; overflow-y:hidden;
+      padding:10px 12px; gap:8px; -webkit-overflow-scrolling:touch; }
+    #thumbs::-webkit-scrollbar{ height:6px; width:auto; }
+    #thumbs::-webkit-scrollbar-thumb{ background:var(--line-strong); border:none; }
+    .thumb{ flex:0 0 108px; }
+    .thumb.cover{ flex:0 0 108px; }
+    .thumb .tt{ padding:6px 8px 5px; gap:6px; }
+    .thumb .no{ min-width:15px; height:15px; font-size:8.5px; }
+    .thumb .tx{ font-size:9.5px; }
+    .thumb .ti img{ height:40px; object-fit:cover; object-position:top; }
+    .thumb.cover .cv{ min-height:40px; padding:8px; }
+    .thumb.cover .cv .no{ margin-bottom:4px; }
+    .thumb.cover .cv b{ font-size:9.5px; }
+    .thumb:hover{ transform:translateY(-2px); }
+    [dir="rtl"] .thumb:hover{ transform:translateY(-2px); }
+
+    #viewer{ order:1; height:auto; flex:1 1 auto; min-height:0; }
+    #vhead{ height:auto; min-height:52px; padding:8px 14px; gap:10px; flex-wrap:wrap; }
+    #vhead .vbrand{ display:block; }
+    #vhead .counter{ font-size:12.5px; margin-inline-end:auto; }
+    #vhead .lang{ padding:6px 12px 6px 10px; font-size:11px; }
+    #vhead .lang::before{ width:12px; height:12px; }
+    #vhead button{ width:32px; height:30px; font-size:15px; }
+
+    #stage{ padding:22px 16px 48px; }
+    h1{ font-size:clamp(21px,6vw,28px); }
+    p.cap{ font-size:14px; }
+    .browser{ border-radius:11px; }
+    .cover-stage{ min-height:60vh; }
+    .cover-stage h1{ font-size:clamp(26px,8vw,38px); }
+    .cover-stage p{ font-size:15px; }
+    .svcgrid{ grid-template-columns:1fr; }
+  }
+
+  @media (max-width:400px){
+    .thumb{ flex-basis:128px; }
+    .thumb.cover{ flex-basis:128px; }
+    #vhead .lang span.lbl{ display:none; }
+    #vhead .lang{ padding:6px; }
+    #vhead .lang::before{ margin:0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="rail">
+  <div id="rhead">
+    <img class="logo" id="railLogo" alt="GTS">
+    <span class="t">app.gts guide<small id="railSub">Employee Handbook</small></span>
+  </div>
+  <div id="thumbs"></div>
+</div>
+
+<div id="viewer">
+  <div id="vhead">
+    <span class="vbrand">app.gts guide</span>
+    <span class="counter" style="direction:ltr;unicode-bidi:isolate"><b id="cur">1</b> <span>/ <span id="tot">1</span></span></span>
+    <button class="lang" id="langBtn"><span class="lbl">العربية</span></button>
+    <div class="navbtns">
+      <button id="prev" aria-label="Previous">‹</button>
+      <button id="next" aria-label="Next">›</button>
+    </div>
+  </div>
+  <div id="stage"></div>
+</div>
+
+<script>
+const IMG = __IMG__;
+const SLIDES = [
+ {cover:true, en:{title:"app.gts,<br><em>tab by tab.</em>", sub:"A quick visual guide to app.gts.sa — sign-in, every dashboard tab, and the request portal."},
+              ar:{title:"app.gts،<br><em>خطوة بخطوة.</em>", sub:"دليل مرئي سريع لموقع app.gts.sa — تسجيل الدخول، كل تبويب، وبوابة الطلبات."}},
+
+ {tag:"Sign in",url:"app.gts.sa/Account/Login",img:"page_login_main",
+  en:{title:"Signing in: Email & Password", cap:"Enter your work email and password, then select Sign In."},
+  ar:{title:"تسجيل الدخول: البريد وكلمة المرور", cap:"أدخل بريدك الإلكتروني وكلمة المرور، ثم اضغط تسجيل الدخول."}},
+ {tag:"Sign in",url:"app.gts.sa:446/Account/Login",img:"page_login_temp",
+  en:{title:"Temp Portal sign-in", cap:"Temporary-account employees sign in with Email & Password, or switch to ID & OTP for a one-time code."},
+  ar:{title:"تسجيل دخول البوابة المؤقتة", cap:"يسجّل الموظفون المؤقتون الدخول بالبريد وكلمة المرور، أو بالتبديل لرمز التحقق عبر رقم الهوية."}},
+
+ {tag:"Getting started",url:"app.gts.sa",img:"page_dash_full",
+  en:{title:"The dashboard — sixteen tabs", cap:"Sign in and you land here. Each card is a tool — select VIEW to open it."},
+  ar:{title:"لوحة التحكم — ستة عشر تبويباً", cap:"بعد تسجيل الدخول تصل إلى هنا. كل بطاقة أداة — اضغط VIEW لفتحها."}},
+
+ {tag:"People & Time",url:"app.gts.sa/employee/MyProfile",img:"page_myprofile",
+  en:{title:"My Profile", cap:"Your personal record on file with HR, plus a link into the Employee Requests portal."},
+  ar:{title:"ملفي الشخصي", cap:"بياناتك الشخصية لدى الموارد البشرية، مع رابط لبوابة طلبات الموظفين."}},
+ {tag:"People & Time",url:"app.gts.sa/Employee/Attendance",img:"page_attendance",
+  en:{title:"Attendance", cap:"Check-in/out history and a colour-coded monthly calendar."},
+  ar:{title:"الحضور", cap:"سجل الحضور والانصراف وتقويم شهري ملوّن حسب الحالة."}},
+ {tag:"People & Time",url:"app.gts.sa/Employee/JoinReports",img:"page_joinreports",
+  en:{title:"Join Reports", cap:"Confirms you've (re)joined work — on hire, or back from vacation."},
+  ar:{title:"تقارير الانضمام", cap:"تأكيد مباشرة العمل — عند التعيين أو العودة من إجازة."}},
+ {tag:"People & Time",url:"app.gts.sa/Employee/Statistics",img:"page_statistics",
+  en:{title:"My Statistics", cap:"Your attendance scorecard — an overall rate plus the breakdown behind it."},
+  ar:{title:"إحصائياتي", cap:"ملخص أدائك في الحضور — نسبة إجمالية وتفاصيلها."}},
+
+ {tag:"Money",url:"app.gts.sa/employee/paymentrequests",img:"page_payment",
+  en:{title:"Payment Requests", cap:"Reimbursement requests and where each one stands in approval."},
+  ar:{title:"طلبات الصرف", cap:"طلبات استرداد المصروفات وحالتها في مسار الاعتماد."}},
+ {tag:"Money",url:"app.gts.sa/Employee/Payroll",img:"page_payroll",
+  en:{title:"Payroll", cap:"Your full salary breakdown — attendance, deductions, daily rates, and the payable total."},
+  ar:{title:"كشف الرواتب", cap:"تفاصيل راتبك كاملة — الحضور، الخصومات، المعدلات اليومية، والإجمالي المستحق."}},
+ {tag:"Money",url:"app.gts.sa/employee/mypettycash",img:"page_pettycash",
+  en:{title:"Petty Cash", cap:"Cash advanced to you for work costs, and your current balance."},
+  ar:{title:"العهدة", cap:"مبالغ نقدية مقدّمة لمصاريف العمل، ورصيدك الحالي."}},
+
+ {tag:"Travel & Mobility",url:"app.gts.sa/Employee/BusinessTripRequests",img:"page_businesstrips",
+  en:{title:"Business Trips", cap:"Request company travel and follow it through approval."},
+  ar:{title:"رحلات العمل", cap:"طلب سفر رسمي ومتابعته حتى الاعتماد."}},
+ {tag:"Travel & Mobility",url:"app.gts.sa/employee/tdys",img:"page_tdy",
+  en:{title:"TDY", cap:"Temporary duty assignments away from your base site."},
+  ar:{title:"الانتدابات", cap:"مهام عمل مؤقتة خارج موقعك الأساسي."}},
+ {tag:"Travel & Mobility",url:"app.gts.sa/Employee/AirTickets",img:"page_airtickets",
+  en:{title:"Air Tickets", cap:"Flight bookings tied to your business travel."},
+  ar:{title:"تذاكر الطيران", cap:"حجوزات الطيران المرتبطة برحلات العمل."}},
+ {tag:"Travel & Mobility",url:"app.gts.sa/Employee/ExitReentries",img:"page_exit",
+  en:{title:"Exit / Reentries", cap:"Your exit & re-entry visa history for travel outside the Kingdom."},
+  ar:{title:"خروج وعودة", cap:"سجل تأشيرات الخروج والعودة للسفر خارج المملكة."}},
+
+ {tag:"Leave & Cover",url:"app.gts.sa/Employee/EmployeeLeaveRequests",img:"page_leave",
+  en:{title:"Leave Requests", cap:"Short leaves and work-from-home days — the everyday time-off tool."},
+  ar:{title:"طلبات المغادرة", cap:"مغادرات قصيرة أو عمل من المنزل — الأداة اليومية للإجازات."}},
+ {tag:"Leave & Cover",url:"app.gts.sa/Employee/EmployeeVacations",img:"page_vacations",
+  en:{title:"Vacations", cap:"Annual leave — submit a new one or follow an existing request."},
+  ar:{title:"الإجازات", cap:"الإجازة السنوية — تقديم طلب جديد أو متابعة طلب قائم."}},
+ {tag:"Leave & Cover",url:"app.gts.sa/Employee/InsuranceRequests",img:"page_insurance",
+  en:{title:"Insurance Requests", cap:"Add yourself or a dependant to the company medical insurance."},
+  ar:{title:"طلبات التأمين", cap:"إضافة نفسك أو أحد المعالين إلى التأمين الطبي للشركة."}},
+
+ {tag:"Support & Growth",url:"app.gts.sa/Employee/Tickets",img:"page_support",
+  en:{title:"Support Tickets", cap:"Ask HR or IT for help, and keep the answer on record."},
+  ar:{title:"تذاكر الدعم", cap:"طلب المساعدة من الموارد البشرية أو تقنية المعلومات مع حفظ الرد."}},
+ {tag:"Support & Growth",url:"app.gts.sa/Employee/MyPerformanceReviews",img:"page_performance",
+  en:{title:"Performance Reviews", cap:"Your evaluation history — and your team's, if you manage people."},
+  ar:{title:"تقييم الأداء", cap:"سجل تقييماتك، وتقييمات فريقك إن كنت مديراً."}},
+
+ {cover:true, en:{title:"That's the tour.", sub:"Dashboard to do something, My Requests to track it. Stuck? Raise a Support Ticket."},
+              ar:{title:"هذه جولتك الكاملة.", sub:"لوحة التحكم للتنفيذ، وطلباتي للمتابعة. واجهت مشكلة؟ افتح تذكرة دعم."}},
+];
+
+const thumbsEl = document.getElementById('thumbs');
+const stageEl  = document.getElementById('stage');
+let lang = 'en';
+let i = 0;
+
+function buildThumbs(){
+  thumbsEl.innerHTML = '';
+  SLIDES.forEach((s, idx) => {
+    const c = s[lang];
+    const el = document.createElement('div');
+    el.className = 'thumb' + (s.cover ? ' cover' : '') + (idx === i ? ' on' : '');
+    el.dataset.i = idx;
+    if (s.cover) {
+      el.innerHTML = `<div class="cv"><span class="no">${idx+1}</span><b>${c.title}</b></div>`;
+    } else {
+      const t = c.title.replace(/<[^>]+>/g,'');
+      el.innerHTML = `<div class="tt"><span class="no">${idx+1}</span><span class="tx">${t}</span></div><div class="ti"><img src="${IMG['thumb_'+s.img]}" alt="" loading="lazy"></div>`;
+    }
+    el.addEventListener('click', () => go(idx));
+    thumbsEl.appendChild(el);
+  });
+}
+
+function renderStage(){
+  const s = SLIDES[i], c = s[lang];
+  stageEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  if (s.cover) {
+    const badge = lang === 'ar' ? 'دليل موظفي app.gts' : 'app.gts employee handbook';
+    stageEl.innerHTML = `<div class="cover-stage"><div class="box"><span class="badge">${badge}</span><h1>${c.title}</h1><p>${c.sub}</p></div></div>`;
+  } else {
+    const svc = s.svc ? `<div class="svcgrid">${s.svc.map(x=>{const v=x[lang];return `<div class="svc"><b>${v[0]}</b>${v[1]}</div>`;}).join('')}</div>` : '';
+    stageEl.innerHTML = `<div class="wrap">
+      <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
+      <div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>
+        <img src="${IMG[s.img]}" alt="${c.title.replace(/<[^>]+>/g,'')}"></div>
+      ${svc}</div>`;
+  }
+  stageEl.scrollTop = 0;
+}
+
+function go(n){
+  i = Math.max(0, Math.min(SLIDES.length - 1, n));
+  [...thumbsEl.children].forEach((t, idx) => t.classList.toggle('on', idx === i));
+  const active = thumbsEl.children[i];
+  if (active) active.scrollIntoView({ block:'nearest', behavior:'smooth' });
+  document.getElementById('cur').textContent = i + 1;
+  document.getElementById('prev').disabled = i === 0;
+  document.getElementById('next').disabled = i === SLIDES.length - 1;
+  renderStage();
+}
+
+document.getElementById('tot').textContent = SLIDES.length;
+document.getElementById('railLogo').src = IMG.logo;
+function applyLangChrome(){
+  document.getElementById('railSub').textContent = lang === 'ar' ? 'دليل الموظف' : 'Employee Handbook';
+}
+applyLangChrome();
+document.getElementById('prev').addEventListener('click', () => go(i - 1));
+document.getElementById('next').addEventListener('click', () => go(i + 1));
+document.getElementById('langBtn').addEventListener('click', () => {
+  lang = lang === 'en' ? 'ar' : 'en';
+  document.querySelector('#langBtn .lbl').textContent = lang === 'en' ? 'العربية' : 'English';
+  document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  applyLangChrome();
+  buildThumbs(); renderStage();
+});
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
+  if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  { e.preventDefault(); go(i - 1); }
+});
+
+buildThumbs();
+go(0);
+</script>
+</body>
+</html>
