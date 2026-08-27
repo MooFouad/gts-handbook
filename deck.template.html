@@ -143,7 +143,7 @@
   .svc b{ display:block; font-family:var(--disp); font-weight:600; color:var(--ink); font-size:14px; margin-bottom:3px; letter-spacing:-.01em; }
   [dir="rtl"] .svc b{ font-family:var(--body); font-weight:700; letter-spacing:0; }
 
-  @keyframes rise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+  @keyframes rise{ from{ opacity:0; transform:scale(.985); } to{ opacity:1; transform:none; } }
   @keyframes imgIn{ from{ opacity:0; transform:scale(1.012); } to{ opacity:1; transform:none; } }
   @keyframes thumbPop{ 0%{ transform:scale(1); } 45%{ transform:scale(1.035); } 100%{ transform:scale(1); } }
   @keyframes stageIn{ from{ opacity:0; transform:scale(.965); } to{ opacity:1; transform:none; } }
@@ -210,7 +210,7 @@
 <div id="rail">
   <div id="rhead">
     <img class="logo" id="railLogo" alt="GTS">
-    <span class="t" id="railTitle">Guide</span>
+    <span class="t" id="railTitle">App Guide</span>
   </div>
   <div id="thumbs"></div>
 </div>
@@ -360,7 +360,7 @@ document.getElementById('railLogo').src = IMG.logo;
 document.getElementById('favicon32').href = IMG.favicon32;
 document.getElementById('favicon180').href = IMG.favicon180;
 function applyLangChrome(){
-  document.getElementById('railTitle').textContent = lang === 'ar' ? 'دليل' : 'Guide';
+  document.getElementById('railTitle').textContent = lang === 'ar' ? 'دليل التطبيق' : 'App Guide';
 }
 applyLangChrome();
 document.getElementById('prev').addEventListener('click', () => go(i - 1));

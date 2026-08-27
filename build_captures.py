@@ -64,11 +64,24 @@ chip.paste(mark, (pad_x, pad_y), mark)
 bio = io.BytesIO(); chip.save(bio, "PNG")
 man["logo"] = "data:image/png;base64,"+base64.b64encode(bio.getvalue()).decode()
 
-# ── favicon: same mark, padded into a square, embedded into the manifest ──
-side = max(mark.width, mark.height)
-fav_pad = int(side * 0.14)
+# ── favicon: the full wordmark is too wide to read at 32px, so use just the
+#    flag-stripe block (the part right of "GTS") — compact, colorful, square-friendly ──
+gap_scan = mark_area.crop((700, 0, mark_area.width, mark_area.height))
+ga = np.asarray(gap_scan)
+gmask = ga[..., 3] > 10
+gcols = np.where(gmask.any(axis=0))[0]
+ggaps = np.diff(gcols)
+split = 700 + gcols[np.argmax(ggaps)] + ggaps.max() // 2   # midpoint of the gap after "GTS"
+flag_area = mark_area.crop((split, 0, mark_area.width, mark_area.height))
+fa = np.asarray(flag_area)
+fmask = fa[..., 3] > 10
+fys, fxs = np.where(fmask)
+flag = flag_area.crop((fxs.min(), fys.min(), fxs.max(), fys.max()))
+
+side = max(flag.width, flag.height)
+fav_pad = int(side * 0.16)
 fav_canvas = Image.new("RGBA", (side + fav_pad*2, side + fav_pad*2), (0,0,0,0))
-fav_canvas.paste(mark, (fav_pad + (side-mark.width)//2, fav_pad + (side-mark.height)//2), mark)
+fav_canvas.paste(flag, (fav_pad + (side-flag.width)//2, fav_pad + (side-flag.height)//2), flag)
 for size, key in [(32,"favicon32"), (180,"favicon180")]:
     icon = fav_canvas.resize((size,size), Image.LANCZOS)
     icon.save(os.path.join(HERE, "assets", f"favicon-{size}.png"))
