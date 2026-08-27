@@ -141,9 +141,10 @@
     box-shadow:0 0 0 3px #fff, 0 3px 9px rgba(228,0,43,.5); animation:hintPop .5s cubic-bezier(.34,1.5,.5,1) both; }
   @keyframes hintPop{ 0%{ transform:scale(0); } 60%{ transform:scale(1.15); } 100%{ transform:scale(1); } }
 
-  ol.steps{ list-style:none; counter-reset:st; margin:26px auto 0; padding:0; max-width:960px; display:grid; gap:11px;
-    animation:rise .8s cubic-bezier(.2,.7,.2,1) .18s both; }
-  ol.steps li{ display:flex; align-items:flex-start; gap:13px; font-size:15px; color:var(--ink-2); line-height:1.5; }
+  ol.steps{ list-style:none; counter-reset:st; margin:2px auto 22px; padding:16px 20px; max-width:1160px; display:grid; gap:9px;
+    background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:0 1px 2px rgba(28,25,23,.04), 0 6px 16px rgba(28,25,23,.05);
+    animation:rise .6s cubic-bezier(.2,.7,.2,1) both; }
+  ol.steps li{ display:flex; align-items:flex-start; gap:12px; font-size:14.5px; color:var(--ink-2); line-height:1.5; }
   ol.steps li .sn{ flex:0 0 auto; width:27px; height:27px; border-radius:50%; background:#E4002B; color:#fff;
     font-family:var(--disp); font-weight:800; font-size:13.5px; display:flex; align-items:center; justify-content:center; margin-top:1px;
     box-shadow:0 2px 6px rgba(228,0,43,.35); }
@@ -279,19 +280,22 @@ const SLIDES = [
  {tag:"People & Time",url:"app.gts.sa/Employee/Attendance",img:"page_attendance",
   en:{title:"Attendance", cap:"Check-in/out history and a colour-coded monthly calendar."},
   ar:{title:"الحضور", cap:"سجل الحضور والانصراف وتقويم شهري ملوّن حسب الحالة."}},
- {tag:"People & Time",url:"app.gts.sa/Employee/JoinReports",img:"page_joinreports",
-  en:{title:"Join Reports", cap:"Confirms you've (re)joined work — on hire, or back from vacation."},
-  ar:{title:"تقارير الانضمام", cap:"تأكيد مباشرة العمل — عند التعيين أو العودة من إجازة."}},
+ {tag:"People & Time",url:"app.gts.sa/Employee/JoinReports",img:"page_joinreports_create",
+  en:{title:"Join Reports", cap:"Confirm you've (re)joined work — on hire, or back from leave. Here's how to submit one:"},
+  ar:{title:"تقارير الانضمام", cap:"أكّد مباشرتك للعمل — عند التعيين أو العودة من إجازة. إليك طريقة التقديم:"},
+  steps:[
+   {n:1, tx:85.4, ty:16.4, bx:74, by:16.4, en:"Click the <b>+</b> icon to start a new join report.", ar:"اضغط على أيقونة <b>+</b> لبدء تقرير انضمام جديد."},
+   {n:2, tx:31.9, ty:45.5, bx:16, by:45.5, en:"Set the <b>Join Date</b> — the day you (re)started work.", ar:"حدّد <b>تاريخ المباشرة</b> — يوم بدء أو استئناف العمل."},
+   {n:3, tx:58.1, ty:45.5, bx:72, by:40, en:"If it's a return from leave, pick the <b>Related Vacation Request</b>.", ar:"إن كان عودة من إجازة، اختر <b>طلب الإجازة المرتبط</b>."},
+   {n:4, tx:65.7, ty:49.1, bx:78, by:53, en:"Click <b>ADD</b> — then it goes to your Direct Manager and HR for approval.", ar:"اضغط <b>ADD</b> — ثم يُرسل لمديرك المباشر والموارد البشرية للاعتماد."},
+  ]},
  {tag:"People & Time",url:"app.gts.sa/Employee/Statistics",img:"page_statistics",
   en:{title:"My Statistics", cap:"Your attendance scorecard — an overall rate plus the breakdown behind it."},
   ar:{title:"إحصائياتي", cap:"ملخص أدائك في الحضور — نسبة إجمالية وتفاصيلها."}},
 
- {tag:"Money",url:"app.gts.sa/employee/paymentrequests",img:"page_payment",
-  en:{title:"Payment Requests", cap:"Reimbursement requests and where each one stands in approval."},
-  ar:{title:"طلبات الصرف", cap:"طلبات استرداد المصروفات وحالتها في مسار الاعتماد."}},
- {tag:"How to",url:"app.gts.sa/employee/paymentrequests",img:"page_pay_create",
-  en:{title:"Create a payment request", cap:"Follow the numbered steps — the red arrows point to each field."},
-  ar:{title:"إنشاء طلب صرف", cap:"اتّبع الخطوات المرقّمة — الأسهم الحمراء تشير إلى كل حقل."},
+ {tag:"Money",url:"app.gts.sa/employee/paymentrequests",img:"page_pay_create",
+  en:{title:"Payment Requests", cap:"Reimbursement requests. Here's how to create one:"},
+  ar:{title:"طلبات الصرف", cap:"طلبات استرداد المصروفات. إليك طريقة إنشاء طلب:"},
   steps:[
    {n:1, tx:87, ty:30, bx:75, by:22, en:"Click the <b>+</b> icon to start a new payment request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب صرف جديد."},
    {n:2, tx:48.6, ty:16.8, bx:15, by:16.8, en:"Select the <b>Beneficiary</b> — or add a new one (the person icon) if you have access.", ar:"اختر <b>المستفيد</b> — أو أضف مستفيداً جديداً (أيقونة الشخص) إن كانت لديك الصلاحية."},
@@ -310,13 +314,28 @@ const SLIDES = [
  {tag:"Money",url:"app.gts.sa/Employee/Payroll",img:"page_payroll",
   en:{title:"Payroll", cap:"Your full salary breakdown — attendance, deductions, daily rates, and the payable total."},
   ar:{title:"كشف الرواتب", cap:"تفاصيل راتبك كاملة — الحضور، الخصومات، المعدلات اليومية، والإجمالي المستحق."}},
- {tag:"Money",url:"app.gts.sa/employee/mypettycash",img:"page_pettycash",
-  en:{title:"Petty Cash", cap:"Cash advanced to you for work costs, and your current balance."},
-  ar:{title:"العهدة", cap:"مبالغ نقدية مقدّمة لمصاريف العمل، ورصيدك الحالي."}},
+ {tag:"Money",url:"app.gts.sa/employee/mypettycash",img:"page_pettycash_create",
+  en:{title:"Petty Cash", cap:"Cash advanced to you for work costs. Here's how to request it:"},
+  ar:{title:"العهدة", cap:"مبالغ نقدية مقدّمة لمصاريف العمل. إليك طريقة الطلب:"},
+  steps:[
+   {n:1, tx:69.9, ty:6.7, bx:59, by:6.7, en:"Click <b>REQUEST PETTY CASH</b>.", ar:"اضغط <b>REQUEST PETTY CASH</b> (طلب عهدة)."},
+   {n:2, tx:45, ty:44, bx:28, by:44, en:"Enter the <b>Amount</b>.", ar:"أدخل <b>المبلغ</b>."},
+   {n:3, tx:45, ty:46.6, bx:28, by:46.6, en:"Enter the <b>Project Name</b>.", ar:"أدخل <b>اسم المشروع</b>."},
+   {n:4, tx:52.4, ty:49.3, bx:64, by:49.3, en:"Click <b>CREATE</b>.", ar:"اضغط <b>CREATE</b> (إنشاء)."},
+  ]},
 
- {tag:"Travel & Mobility",url:"app.gts.sa/Employee/BusinessTripRequests",img:"page_businesstrips",
-  en:{title:"Business Trips", cap:"Request company travel and follow it through approval."},
-  ar:{title:"رحلات العمل", cap:"طلب سفر رسمي ومتابعته حتى الاعتماد."}},
+ {tag:"Travel & Mobility",url:"app.gts.sa/Employee/BusinessTripRequests",img:"page_businesstrips_create",
+  en:{title:"Business Trips", cap:"Request company travel. Here's how to submit a trip:"},
+  ar:{title:"رحلات العمل", cap:"طلب سفر رسمي. إليك طريقة تقديم رحلة:"},
+  steps:[
+   {n:1, tx:85.4, ty:5.2, bx:74, by:5.2, en:"Click the <b>+</b> icon to start a new business trip.", ar:"اضغط على أيقونة <b>+</b> لبدء رحلة عمل جديدة."},
+   {n:2, tx:45, ty:36.7, bx:14, by:36.7, en:"Set whether the trip is <b>abroad</b> and if an <b>exit/re-entry</b> is required.", ar:"حدّد إن كانت الرحلة <b>خارج المملكة</b> وهل تتطلب <b>خروج وعودة</b>."},
+   {n:3, tx:45, ty:42, bx:14, by:42, en:"Enter the trip's <b>From</b> and <b>To</b> locations.", ar:"أدخل موقعي <b>من</b> و <b>إلى</b> للرحلة."},
+   {n:4, tx:45, ty:47.1, bx:14, by:47.1, en:"Set the <b>From Date</b> and <b>To Date</b>.", ar:"حدّد <b>تاريخ البداية</b> و <b>تاريخ النهاية</b>."},
+   {n:5, tx:45, ty:52.3, bx:14, by:52.3, en:"Tick <b>Require Petty Cash</b> or <b>Require Air Ticket</b> if you need them.", ar:"فعّل <b>طلب عهدة</b> أو <b>طلب تذكرة طيران</b> عند الحاجة."},
+   {n:6, tx:45, ty:57.4, bx:14, by:57.4, en:"Add any <b>Comments</b>.", ar:"أضف أي <b>ملاحظات</b>."},
+   {n:7, tx:65.7, ty:61.8, bx:78, by:61.8, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
+  ]},
  {tag:"Travel & Mobility",url:"app.gts.sa/Employee/AirTickets",img:"page_airtickets",
   en:{title:"Air Tickets", cap:"Flight bookings tied to your business travel."},
   ar:{title:"تذاكر الطيران", cap:"حجوزات الطيران المرتبطة برحلات العمل."}},
@@ -324,15 +343,37 @@ const SLIDES = [
   en:{title:"Exit / Reentries", cap:"Your exit & re-entry visa history for travel outside the Kingdom."},
   ar:{title:"خروج وعودة", cap:"سجل تأشيرات الخروج والعودة للسفر خارج المملكة."}},
 
- {tag:"Leave & Cover",url:"app.gts.sa/Employee/EmployeeLeaveRequests",img:"page_leave",
-  en:{title:"Leave Requests", cap:"Short leaves and work-from-home days — the everyday time-off tool."},
-  ar:{title:"طلبات المغادرة", cap:"مغادرات قصيرة أو عمل من المنزل — الأداة اليومية للإجازات."}},
- {tag:"Leave & Cover",url:"app.gts.sa/Employee/EmployeeVacations",img:"page_vacations",
-  en:{title:"Vacations", cap:"Annual leave — submit a new one or follow an existing request."},
-  ar:{title:"الإجازات", cap:"الإجازة السنوية — تقديم طلب جديد أو متابعة طلب قائم."}},
- {tag:"Leave & Cover",url:"app.gts.sa/Employee/InsuranceRequests",img:"page_insurance",
-  en:{title:"Insurance Requests", cap:"Add yourself or a dependant to the company medical insurance."},
-  ar:{title:"طلبات التأمين", cap:"إضافة نفسك أو أحد المعالين إلى التأمين الطبي للشركة."}},
+ {tag:"Leave & Cover",url:"app.gts.sa/Employee/EmployeeLeaveRequests",img:"page_leave_create",
+  en:{title:"Leave Requests", cap:"Short leaves and work-from-home days. Here's how to submit one:"},
+  ar:{title:"طلبات المغادرة", cap:"مغادرات قصيرة أو عمل من المنزل. إليك طريقة التقديم:"},
+  steps:[
+   {n:1, tx:82.7, ty:7.2, bx:71, by:7.2, en:"Click the <b>+</b> icon to start a new leave request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب مغادرة جديد."},
+   {n:2, tx:45, ty:33.8, bx:14, by:33.8, en:"Choose the <b>Leave Type</b> — Emergency, Sick, Early, Late, or Work From Home.", ar:"اختر <b>نوع الإجازة</b> — طارئة، مرضية، مبكرة، تأخير، أو عمل من المنزل."},
+   {n:3, tx:45, ty:43.2, bx:14, by:43.2, en:"Pick the <b>Leave Period</b> — the From and To dates.", ar:"حدّد <b>فترة الإجازة</b> — تاريخ البداية والنهاية."},
+   {n:4, tx:32.5, ty:47.3, bx:14, by:47.3, en:"Add a <b>Destination</b> if relevant (optional).", ar:"أضف <b>الوجهة</b> إن لزم (اختياري)."},
+   {n:5, tx:45, ty:57.7, bx:14, by:57.7, en:"Add a <b>Memo</b> with any details (optional).", ar:"أضف <b>ملاحظة</b> بأي تفاصيل (اختياري)."},
+   {n:6, tx:65.7, ty:64, bx:78, by:64, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
+  ]},
+ {tag:"Leave & Cover",url:"app.gts.sa/Employee/EmployeeVacations",img:"page_vacations_create",
+  en:{title:"Vacations", cap:"Annual leave. Here's how to submit a vacation request:"},
+  ar:{title:"الإجازات", cap:"الإجازة السنوية. إليك طريقة تقديم طلب إجازة:"},
+  steps:[
+   {n:1, tx:82.7, ty:7.2, bx:71, by:7.2, en:"Click the <b>+</b> icon to start a new vacation request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب إجازة جديد."},
+   {n:2, tx:31.8, ty:24.1, bx:15, by:24.1, en:"Choose <b>Regular</b> or <b>Emergency</b> vacation.", ar:"اختر إجازة <b>عادية</b> أو <b>طارئة</b>."},
+   {n:3, tx:45, ty:33, bx:15, by:33, en:"Pick the <b>Vacation Period</b> (From – To).", ar:"حدّد <b>فترة الإجازة</b> (من – إلى)."},
+   {n:4, tx:45, ty:37.2, bx:15, by:37.2, en:"Set <b>From City</b>, <b>To City</b>, or an other destination.", ar:"حدّد <b>مدينة المغادرة</b> و<b>مدينة الوصول</b> أو وجهة أخرى."},
+   {n:5, tx:45, ty:51, bx:15, by:51, en:"Tick <b>Require Exit Re-entry</b> / <b>Air Ticket</b> and the two confirmations if they apply.", ar:"فعّل <b>خروج وعودة</b> / <b>تذكرة طيران</b> والإقرارين إن انطبقا."},
+   {n:6, tx:65.7, ty:74.6, bx:78, by:74.6, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
+  ]},
+ {tag:"Leave & Cover",url:"app.gts.sa/Employee/InsuranceRequests",img:"page_insurance_create",
+  en:{title:"Insurance Requests", cap:"Add yourself or a dependant to the company medical insurance:"},
+  ar:{title:"طلبات التأمين", cap:"أضف نفسك أو أحد المعالين إلى التأمين الطبي للشركة:"},
+  steps:[
+   {n:1, tx:85.4, ty:5.2, bx:74, by:5.2, en:"Click the <b>+</b> icon to start a new insurance request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب تأمين جديد."},
+   {n:2, tx:45, ty:41.1, bx:18, by:41.1, en:"Select the <b>Dependent Name</b> to add to the medical insurance.", ar:"اختر <b>اسم المعال</b> لإضافته إلى التأمين الطبي."},
+   {n:3, tx:45, ty:46.8, bx:18, by:46.8, en:"Download the declaration form, fill it, and <b>upload</b> it here — required.", ar:"نزّل نموذج الإقرار واملأه ثم <b>ارفعه</b> هنا — إلزامي."},
+   {n:4, tx:65.7, ty:52.7, bx:78, by:52.7, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
+  ]},
 
  {tag:"Support & Growth",url:"app.gts.sa/Employee/Tickets",img:"page_support",
   en:{title:"Support Tickets", cap:"Ask HR or IT for help, and keep the answer on record."},
@@ -448,9 +489,10 @@ function renderStage(){
       : `<img src="img/${s.img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager" onload="this.classList.add('loaded')">`;
     stageEl.innerHTML = `<div class="wrap">
       <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
+      ${stepsList}
       <div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>
         ${imgWrap}</div>
-      ${stepsList}${svc}</div>`;
+      ${svc}</div>`;
   }
   stageEl.scrollTop = 0;
 }

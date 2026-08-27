@@ -28,6 +28,9 @@ MAP = {
  "form_govrelations":"page_form_govrelations", "form_other":"page_form_other",
  "form_leave":"page_form_leave", "form_chamber":"page_form_chamber",
  "pay_form":"page_pay_create", "pay_list":"page_pay_attach",
+ "leave_form":"page_leave_create", "pettycash_form":"page_pettycash_create",
+ "joinreports_form":"page_joinreports_create", "insurance_form":"page_insurance_create",
+ "businesstrips_form":"page_businesstrips_create", "vacations_form":"page_vacations_create",
 }
 # sensitive blur rectangles (fractions of the image: l,t,r,b)
 BLUR = {
