@@ -120,7 +120,9 @@ def seg_rect(y0,y1,l,t,r,b):
 payroll_blur = [
  seg_rect(0,c1,   0.53,0.71,0.96,0.77),   # package legend amounts
  seg_rect(0,c1,   0.28,0.86,0.44,0.925),  # total payable (overview card)
+ seg_rect(c1,c2,  0.72,0.276,0.85,0.302), # "(20.83 SAR)" inline in Punctuality Analysis
  seg_rect(c1,c2,  0.09,0.83,0.20,0.875),  # basic daily rate
+ seg_rect(c1,c2,  0.345,0.605,0.415,0.628), # lateness deduction amount
  seg_rect(c1,c2,  0.33,0.925,0.45,0.965), # full daily rate
  seg_rect(c3,h,   0.475,0.27,0.635,0.91), # summary amount column + total payable
 ]
