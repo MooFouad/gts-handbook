@@ -31,6 +31,7 @@ MAP = {
  "leave_form":"page_leave_create", "pettycash_form":"page_pettycash_create",
  "joinreports_form":"page_joinreports_create", "insurance_form":"page_insurance_create",
  "businesstrips_form":"page_businesstrips_create", "vacations_form":"page_vacations_create",
+ "support_form":"page_support_create",
 }
 # sensitive blur rectangles (fractions of the image: l,t,r,b)
 BLUR = {

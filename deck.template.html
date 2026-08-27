@@ -123,6 +123,10 @@
   .browser .dots i:nth-child(1){ background:#EC6A5E; } .browser .dots i:nth-child(2){ background:#F4BF4F; } .browser .dots i:nth-child(3){ background:#61C554; }
   .browser .url{ flex:1; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:5px 12px; font-family:var(--mono);
     font-size:12px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .browser + .browser{ margin-top:26px; }
+  .shot2label{ margin:26px auto 8px; max-width:1160px; font-family:var(--body); font-size:13px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--amber-deep); }
+  .shot2label:empty{ display:none; }
   .browser img{ display:block; width:100%; height:auto; min-height:200px; background:linear-gradient(100deg,#F3F0EA 30%,#F9F7F2 50%,#F3F0EA 70%);
     background-size:200% 100%; animation:imgIn .85s cubic-bezier(.2,.7,.2,1) .22s both, shimmer 1.3s ease-in-out infinite; }
   .browser img.loaded{ animation:imgIn .85s cubic-bezier(.2,.7,.2,1) .22s both; background:none; min-height:0; }
@@ -294,8 +298,8 @@ const SLIDES = [
   ar:{title:"إحصائياتي", cap:"ملخص أدائك في الحضور — نسبة إجمالية وتفاصيلها."}},
 
  {tag:"Money",url:"app.gts.sa/employee/paymentrequests",img:"page_pay_create",
-  en:{title:"Payment Requests", cap:"Reimbursement requests. Here's how to create one:"},
-  ar:{title:"طلبات الصرف", cap:"طلبات استرداد المصروفات. إليك طريقة إنشاء طلب:"},
+  en:{title:"Payment Requests", cap:"Reimbursement requests. Here's how to create one:", sub2:"Then, back in the list:"},
+  ar:{title:"طلبات الصرف", cap:"طلبات استرداد المصروفات. إليك طريقة إنشاء طلب:", sub2:"ثم في القائمة:"},
   steps:[
    {n:1, tx:87, ty:30, bx:75, by:22, en:"Click the <b>+</b> icon to start a new payment request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب صرف جديد."},
    {n:2, tx:48.6, ty:16.8, bx:15, by:16.8, en:"Select the <b>Beneficiary</b> — or add a new one (the person icon) if you have access.", ar:"اختر <b>المستفيد</b> — أو أضف مستفيداً جديداً (أيقونة الشخص) إن كانت لديك الصلاحية."},
@@ -304,12 +308,10 @@ const SLIDES = [
    {n:5, tx:50, ty:34.8, bx:15, by:34.8, en:"Describe the reason for the request in <b>Description</b>.", ar:"اكتب سبب الطلب في حقل <b>الوصف</b>."},
    {n:6, tx:48.6, ty:39.4, bx:15, by:39.4, en:"In <b>Account</b>, select the department that will bear the cost.", ar:"في حقل <b>الحساب</b>، اختر القسم الذي سيتحمل التكلفة."},
    {n:7, tx:71.5, ty:56.8, bx:87, by:62, en:"Click <b>ADD</b> — the request now appears in your Payment Requests list.", ar:"اضغط <b>ADD</b> — سيظهر الطلب في قائمة طلبات الصرف."},
-  ]},
- {tag:"How to",url:"app.gts.sa/employee/paymentrequests",img:"page_pay_attach",
-  en:{title:"Attach the scan", cap:"After the request is created, add its supporting file from the list."},
-  ar:{title:"إرفاق المستند", cap:"بعد إنشاء الطلب، أرفق المستند الداعم من القائمة."},
-  steps:[
-   {n:8, tx:61, ty:39, bx:78, by:33, en:"Click the <b>+</b> icon in the <b>Scan</b> column to attach your file to the request.", ar:"اضغط على أيقونة <b>+</b> في عمود <b>Scan</b> لإرفاق ملفك بالطلب."},
+  ],
+  img2:"page_pay_attach",
+  steps2:[
+   {n:8, tx:61, ty:39, bx:78, by:33, en:"Back in the list, click the <b>+</b> icon in the <b>Scan</b> column to attach your file to the request.", ar:"في القائمة، اضغط على أيقونة <b>+</b> في عمود <b>Scan</b> لإرفاق ملفك بالطلب."},
   ]},
  {tag:"Money",url:"app.gts.sa/Employee/Payroll",img:"page_payroll",
   en:{title:"Payroll", cap:"Your full salary breakdown — attendance, deductions, daily rates, and the payable total."},
@@ -337,11 +339,11 @@ const SLIDES = [
    {n:7, tx:65.7, ty:61.8, bx:78, by:61.8, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
   ]},
  {tag:"Travel & Mobility",url:"app.gts.sa/Employee/AirTickets",img:"page_airtickets",
-  en:{title:"Air Tickets", cap:"Flight bookings tied to your business travel."},
-  ar:{title:"تذاكر الطيران", cap:"حجوزات الطيران المرتبطة برحلات العمل."}},
+  en:{title:"Air Tickets", cap:"Flight bookings for your trips — created automatically when you tick “Require Air Ticket” on a Business Trip request. This page tracks them."},
+  ar:{title:"تذاكر الطيران", cap:"حجوزات الطيران لرحلاتك — تُنشأ تلقائياً عند تفعيل «طلب تذكرة طيران» في طلب رحلة العمل. هذه الصفحة لمتابعتها."}},
  {tag:"Travel & Mobility",url:"app.gts.sa/Employee/ExitReentries",img:"page_exit",
-  en:{title:"Exit / Reentries", cap:"Your exit & re-entry visa history for travel outside the Kingdom."},
-  ar:{title:"خروج وعودة", cap:"سجل تأشيرات الخروج والعودة للسفر خارج المملكة."}},
+  en:{title:"Exit / Reentries", cap:"Exit & re-entry visas — created when you tick “Exit Re-entry Required” on a Business Trip or Vacation. This page tracks them."},
+  ar:{title:"خروج وعودة", cap:"تأشيرات الخروج والعودة — تُنشأ عند تفعيل «خروج وعودة» في طلب رحلة عمل أو إجازة. هذه الصفحة لمتابعتها."}},
 
  {tag:"Leave & Cover",url:"app.gts.sa/Employee/EmployeeLeaveRequests",img:"page_leave_create",
   en:{title:"Leave Requests", cap:"Short leaves and work-from-home days. Here's how to submit one:"},
@@ -375,9 +377,16 @@ const SLIDES = [
    {n:4, tx:65.7, ty:52.7, bx:78, by:52.7, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
   ]},
 
- {tag:"Support & Growth",url:"app.gts.sa/Employee/Tickets",img:"page_support",
-  en:{title:"Support Tickets", cap:"Ask HR or IT for help, and keep the answer on record."},
-  ar:{title:"تذاكر الدعم", cap:"طلب المساعدة من الموارد البشرية أو تقنية المعلومات مع حفظ الرد."}},
+ {tag:"Support & Growth",url:"app.gts.sa/Employee/Tickets",img:"page_support_create",
+  en:{title:"Support Tickets", cap:"Ask HR or IT for help. Open the + button (bottom-left) to get this form, then:"},
+  ar:{title:"تذاكر الدعم", cap:"اطلب المساعدة من الموارد البشرية أو تقنية المعلومات. اضغط زر + (أسفل اليسار) لفتح هذا النموذج، ثم:"},
+  steps:[
+   {n:1, tx:27.8, ty:20.1, bx:14, by:20.1, en:"Enter a clear <b>Title</b> for your ticket.", ar:"أدخل <b>عنواناً</b> واضحاً للتذكرة."},
+   {n:2, tx:27.8, ty:28.5, bx:14, by:28.5, en:"Describe the issue in <b>Description</b>.", ar:"اشرح المشكلة في حقل <b>الوصف</b>."},
+   {n:3, tx:53.5, ty:18.6, bx:44, by:14, en:"Choose the <b>Ticket Type</b> — HR or IT.", ar:"اختر <b>نوع التذكرة</b> — موارد بشرية أو تقنية معلومات."},
+   {n:4, tx:62.2, ty:23.4, bx:88, by:23.4, en:"Pick a <b>Topic</b> and a <b>Priority</b>.", ar:"اختر <b>الموضوع</b> و<b>الأولوية</b>."},
+   {n:5, tx:74, ty:37.6, bx:88, by:37.6, en:"Click <b>SUBMIT TICKET</b>.", ar:"اضغط <b>SUBMIT TICKET</b> (إرسال التذكرة)."},
+  ]},
  {tag:"Support & Growth",url:"app.gts.sa/Employee/MyPerformanceReviews",img:"page_performance",
   en:{title:"Performance Reviews", cap:"Your evaluation history — and your team's, if you manage people."},
   ar:{title:"تقييم الأداء", cap:"سجل تقييماتك، وتقييمات فريقك إن كنت مديراً."}},
@@ -473,25 +482,30 @@ function renderStage(){
     stageEl.innerHTML = `<div class="cover-stage"><div class="box"><span class="badge">${badge}</span><h1>${c.title}</h1><p>${c.sub}</p></div></div>`;
   } else {
     const svc = s.svc ? `<div class="svcgrid">${s.svc.map(x=>{const v=x[lang];return `<div class="svc"><b>${v[0]}</b>${v[1]}</div>`;}).join('')}</div>` : '';
-    let ann = '', stepsList = '';
-    if (s.steps && s.steps.length) {
-      const lines = s.steps.map(p => `<line x1="${p.bx}" y1="${p.by}" x2="${p.tx}" y2="${p.ty}"></line>`).join('');
-      const marks = s.steps.map(p => {
-        const a = Math.atan2(p.ty - p.by, p.tx - p.bx) * 180 / Math.PI;
-        return `<div class="tip" style="left:${p.tx}%;top:${p.ty}%;transform:translate(0,-50%) rotate(${a}deg);transform-origin:0 50%"></div>`
-             + `<div class="hint" style="left:${p.bx}%;top:${p.by}%">${p.n}</div>`;
-      }).join('');
-      ann = `<svg class="ann" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg><div class="marks">${marks}</div>`;
-      stepsList = `<ol class="steps">${s.steps.map(p => `<li><span class="sn">${p.n}</span><span>${p[lang]}</span></li>`).join('')}</ol>`;
+    // a shot = one screenshot in a browser frame, optionally with numbered arrows
+    function shot(img, steps){
+      let ann = '';
+      if (steps && steps.length) {
+        const lines = steps.map(p => `<line x1="${p.bx}" y1="${p.by}" x2="${p.tx}" y2="${p.ty}"></line>`).join('');
+        const marks = steps.map(p => {
+          const a = Math.atan2(p.ty - p.by, p.tx - p.bx) * 180 / Math.PI;
+          return `<div class="tip" style="left:${p.tx}%;top:${p.ty}%;transform:translate(0,-50%) rotate(${a}deg);transform-origin:0 50%"></div>`
+               + `<div class="hint" style="left:${p.bx}%;top:${p.by}%">${p.n}</div>`;
+        }).join('');
+        ann = `<svg class="ann" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg><div class="marks">${marks}</div>`;
+      }
+      const inner = ann
+        ? `<div class="shot"><img src="img/${img}.jpg" alt="" loading="eager" onload="this.classList.add('loaded')">${ann}</div>`
+        : `<img src="img/${img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager" onload="this.classList.add('loaded')">`;
+      return `<div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>${inner}</div>`;
     }
-    const imgWrap = ann
-      ? `<div class="shot"><img src="img/${s.img}.jpg" alt="" loading="eager" onload="this.classList.add('loaded')">${ann}</div>`
-      : `<img src="img/${s.img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager" onload="this.classList.add('loaded')">`;
+    const allSteps = [...(s.steps||[]), ...(s.steps2||[])];
+    const stepsList = allSteps.length ? `<ol class="steps">${allSteps.map(p => `<li><span class="sn">${p.n}</span><span>${p[lang]}</span></li>`).join('')}</ol>` : '';
+    const shots = shot(s.img, s.steps) + (s.img2 ? `<div class="shot2label">${(c.sub2||'')}</div>` + shot(s.img2, s.steps2) : '');
     stageEl.innerHTML = `<div class="wrap">
       <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
       ${stepsList}
-      <div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>
-        ${imgWrap}</div>
+      ${shots}
       ${svc}</div>`;
   }
   stageEl.scrollTop = 0;
