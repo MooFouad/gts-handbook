@@ -140,20 +140,21 @@
   .marks{ position:absolute; inset:0; z-index:3; pointer-events:none; }
   .marks .tip{ position:absolute; width:0; height:0; border-left:14px solid #E4002B; border-top:8px solid transparent;
     border-bottom:8px solid transparent; filter:drop-shadow(0 1px 2px rgba(0,0,0,.35)); }
-  .marks .hint{ position:absolute; width:30px; height:30px; margin:-15px 0 0 -15px; border-radius:50%;
-    background:#E4002B; color:#fff; font-family:var(--disp); font-weight:800; font-size:15px; line-height:30px; text-align:center;
-    box-shadow:0 0 0 3px #fff, 0 3px 9px rgba(228,0,43,.5); animation:hintPop .5s cubic-bezier(.34,1.5,.5,1) both; }
+  /* callout = number badge + its explanation, sitting right on the screenshot */
+  .marks .call{ position:absolute; z-index:3; max-width:214px; display:flex; gap:8px; align-items:flex-start;
+    padding:7px 10px; border-radius:11px; background:rgba(255,255,255,.96); border:1px solid rgba(28,25,23,.10);
+    box-shadow:0 2px 5px rgba(28,25,23,.16), 0 10px 26px rgba(28,25,23,.22);
+    font-family:var(--body); font-size:12px; line-height:1.36; color:var(--ink-2); font-weight:500; text-align:left;
+    opacity:0; animation:callIn .5s ease .12s forwards; }
+  @keyframes callIn{ from{ opacity:0; } to{ opacity:1; } }
+  .marks .call.r{ flex-direction:row-reverse; text-align:right; }
+  .marks .call b{ color:var(--ink); font-weight:700; }
+  .marks .call .sn{ flex:0 0 auto; width:21px; height:21px; border-radius:50%; background:#E4002B; color:#fff;
+    font-family:var(--disp); font-weight:800; font-size:11.5px; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 6px rgba(228,0,43,.4); }
+  [dir="rtl"] .marks .call{ text-align:right; }
+  [dir="rtl"] .marks .call.r{ text-align:left; }
   @keyframes hintPop{ 0%{ transform:scale(0); } 60%{ transform:scale(1.15); } 100%{ transform:scale(1); } }
-
-  ol.steps{ list-style:none; counter-reset:st; margin:2px auto 22px; padding:16px 20px; max-width:1160px; display:grid; gap:9px;
-    background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:0 1px 2px rgba(28,25,23,.04), 0 6px 16px rgba(28,25,23,.05);
-    animation:rise .6s cubic-bezier(.2,.7,.2,1) both; }
-  ol.steps li{ display:flex; align-items:flex-start; gap:12px; font-size:14.5px; color:var(--ink-2); line-height:1.5; }
-  ol.steps li .sn{ flex:0 0 auto; width:27px; height:27px; border-radius:50%; background:#E4002B; color:#fff;
-    font-family:var(--disp); font-weight:800; font-size:13.5px; display:flex; align-items:center; justify-content:center; margin-top:1px;
-    box-shadow:0 2px 6px rgba(228,0,43,.35); }
-  ol.steps li b{ color:var(--ink); font-weight:600; }
-  [dir="rtl"] ol.steps li{ text-align:right; }
 
   .cover-stage{ display:flex; align-items:center; justify-content:center; min-height:74vh; text-align:center; }
   .cover-stage .box{ max-width:660px; animation:rise .9s cubic-bezier(.2,.7,.2,1) both; }
@@ -301,17 +302,17 @@ const SLIDES = [
   en:{title:"Payment Requests", cap:"Reimbursement requests. Here's how to create one:", sub2:"Then, back in the list:"},
   ar:{title:"طلبات الصرف", cap:"طلبات استرداد المصروفات. إليك طريقة إنشاء طلب:", sub2:"ثم في القائمة:"},
   steps:[
-   {n:1, tx:87, ty:30, bx:75, by:22, en:"Click the <b>+</b> icon to start a new payment request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب صرف جديد."},
-   {n:2, tx:48.6, ty:16.8, bx:15, by:16.8, en:"Select the <b>Beneficiary</b> — or add a new one (the person icon) if you have access.", ar:"اختر <b>المستفيد</b> — أو أضف مستفيداً جديداً (أيقونة الشخص) إن كانت لديك الصلاحية."},
-   {n:3, tx:50, ty:22.8, bx:15, by:22.8, en:"Select the <b>Department</b>.", ar:"اختر <b>القسم</b>."},
-   {n:4, tx:31.7, ty:28.8, bx:15, by:28.8, en:"Enter the <b>Amount</b>.", ar:"أدخل <b>المبلغ</b>."},
-   {n:5, tx:50, ty:34.8, bx:15, by:34.8, en:"Describe the reason for the request in <b>Description</b>.", ar:"اكتب سبب الطلب في حقل <b>الوصف</b>."},
-   {n:6, tx:48.6, ty:39.4, bx:15, by:39.4, en:"In <b>Account</b>, select the department that will bear the cost.", ar:"في حقل <b>الحساب</b>، اختر القسم الذي سيتحمل التكلفة."},
-   {n:7, tx:71.5, ty:56.8, bx:87, by:62, en:"Click <b>ADD</b> — the request now appears in your Payment Requests list.", ar:"اضغط <b>ADD</b> — سيظهر الطلب في قائمة طلبات الصرف."},
+   {n:1, tx:87, ty:30, bx:75, by:22, en:"Click <b>+</b> to start a new request.", ar:"اضغط <b>+</b> لبدء طلب جديد."},
+   {n:2, tx:48.6, ty:16.8, bx:21, by:16.8, en:"Pick the <b>Beneficiary</b> (or add one).", ar:"اختر <b>المستفيد</b> (أو أضف واحداً)."},
+   {n:3, tx:50, ty:22.8, bx:21, by:22.8, en:"Pick the <b>Department</b>.", ar:"اختر <b>القسم</b>."},
+   {n:4, tx:31.7, ty:28.8, bx:21, by:28.8, en:"Enter the <b>Amount</b>.", ar:"أدخل <b>المبلغ</b>."},
+   {n:5, tx:50, ty:34.8, bx:21, by:34.8, en:"Write the reason in <b>Description</b>.", ar:"اكتب السبب في <b>الوصف</b>."},
+   {n:6, tx:48.6, ty:39.4, bx:21, by:39.4, en:"Set <b>Account</b> — who bears the cost.", ar:"حدّد <b>الحساب</b> — من يتحمل التكلفة."},
+   {n:7, tx:71.5, ty:56.8, bx:87, by:62, en:"Click <b>ADD</b> to create it.", ar:"اضغط <b>ADD</b> للإنشاء."},
   ],
   img2:"page_pay_attach",
   steps2:[
-   {n:8, tx:61, ty:39, bx:78, by:33, en:"Back in the list, click the <b>+</b> icon in the <b>Scan</b> column to attach your file to the request.", ar:"في القائمة، اضغط على أيقونة <b>+</b> في عمود <b>Scan</b> لإرفاق ملفك بالطلب."},
+   {n:8, tx:61, ty:39, bx:41, by:31, en:"Click <b>+</b> in the <b>Scan</b> column to attach your file.", ar:"اضغط <b>+</b> في عمود <b>Scan</b> لإرفاق ملفك."},
   ]},
  {tag:"Money",url:"app.gts.sa/Employee/Payroll",img:"page_payroll",
   en:{title:"Payroll", cap:"Your full salary breakdown — attendance, deductions, daily rates, and the payable total."},
@@ -330,12 +331,12 @@ const SLIDES = [
   en:{title:"Business Trips", cap:"Request company travel. Here's how to submit a trip:"},
   ar:{title:"رحلات العمل", cap:"طلب سفر رسمي. إليك طريقة تقديم رحلة:"},
   steps:[
-   {n:1, tx:85.4, ty:5.2, bx:74, by:5.2, en:"Click the <b>+</b> icon to start a new business trip.", ar:"اضغط على أيقونة <b>+</b> لبدء رحلة عمل جديدة."},
-   {n:2, tx:45, ty:36.7, bx:14, by:36.7, en:"Set whether the trip is <b>abroad</b> and if an <b>exit/re-entry</b> is required.", ar:"حدّد إن كانت الرحلة <b>خارج المملكة</b> وهل تتطلب <b>خروج وعودة</b>."},
-   {n:3, tx:45, ty:42, bx:14, by:42, en:"Enter the trip's <b>From</b> and <b>To</b> locations.", ar:"أدخل موقعي <b>من</b> و <b>إلى</b> للرحلة."},
-   {n:4, tx:45, ty:47.1, bx:14, by:47.1, en:"Set the <b>From Date</b> and <b>To Date</b>.", ar:"حدّد <b>تاريخ البداية</b> و <b>تاريخ النهاية</b>."},
-   {n:5, tx:45, ty:52.3, bx:14, by:52.3, en:"Tick <b>Require Petty Cash</b> or <b>Require Air Ticket</b> if you need them.", ar:"فعّل <b>طلب عهدة</b> أو <b>طلب تذكرة طيران</b> عند الحاجة."},
-   {n:6, tx:45, ty:57.4, bx:14, by:57.4, en:"Add any <b>Comments</b>.", ar:"أضف أي <b>ملاحظات</b>."},
+   {n:1, tx:85.4, ty:5.2, bx:74, by:5.2, en:"Click <b>+</b> for a new trip.", ar:"اضغط <b>+</b> لرحلة جديدة."},
+   {n:2, tx:45, ty:36.7, bx:20, by:36.7, en:"Set if <b>abroad</b> and if <b>exit/re-entry</b> is needed.", ar:"حدّد إن كانت <b>خارج المملكة</b> وهل تلزم <b>خروج وعودة</b>."},
+   {n:3, tx:45, ty:42, bx:20, by:42, en:"Enter <b>From</b> and <b>To</b> locations.", ar:"أدخل موقعي <b>من</b> و<b>إلى</b>."},
+   {n:4, tx:45, ty:47.1, bx:20, by:47.1, en:"Set <b>From</b> and <b>To</b> dates.", ar:"حدّد تاريخي <b>البداية</b> و<b>النهاية</b>."},
+   {n:5, tx:45, ty:52.3, bx:20, by:52.3, en:"Tick <b>Petty Cash</b> / <b>Air Ticket</b> if needed.", ar:"فعّل <b>العهدة</b> / <b>تذكرة الطيران</b> عند الحاجة."},
+   {n:6, tx:45, ty:57.4, bx:20, by:57.4, en:"Add any <b>Comments</b>.", ar:"أضف <b>ملاحظات</b>."},
    {n:7, tx:65.7, ty:61.8, bx:78, by:61.8, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
   ]},
  {tag:"Travel & Mobility",url:"app.gts.sa/Employee/AirTickets",img:"page_airtickets",
@@ -489,8 +490,12 @@ function renderStage(){
         const lines = steps.map(p => `<line x1="${p.bx}" y1="${p.by}" x2="${p.tx}" y2="${p.ty}"></line>`).join('');
         const marks = steps.map(p => {
           const a = Math.atan2(p.ty - p.by, p.tx - p.bx) * 180 / Math.PI;
+          const flowLeft = p.tx >= p.bx;                 // text spills away from the arrow tip
+          const hx = flowLeft ? '-100%' : '0';
+          const hy = p.by < 9 ? '0' : (p.by > 91 ? '-100%' : '-50%');
+          const cls = flowLeft ? 'r' : 'l';
           return `<div class="tip" style="left:${p.tx}%;top:${p.ty}%;transform:translate(0,-50%) rotate(${a}deg);transform-origin:0 50%"></div>`
-               + `<div class="hint" style="left:${p.bx}%;top:${p.by}%">${p.n}</div>`;
+               + `<div class="call ${cls}" style="left:${p.bx}%;top:${p.by}%;transform:translate(${hx},${hy})"><span class="sn">${p.n}</span><span>${p[lang]}</span></div>`;
         }).join('');
         ann = `<svg class="ann" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg><div class="marks">${marks}</div>`;
       }
@@ -499,12 +504,9 @@ function renderStage(){
         : `<img src="img/${img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager" onload="this.classList.add('loaded')">`;
       return `<div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>${inner}</div>`;
     }
-    const allSteps = [...(s.steps||[]), ...(s.steps2||[])];
-    const stepsList = allSteps.length ? `<ol class="steps">${allSteps.map(p => `<li><span class="sn">${p.n}</span><span>${p[lang]}</span></li>`).join('')}</ol>` : '';
     const shots = shot(s.img, s.steps) + (s.img2 ? `<div class="shot2label">${(c.sub2||'')}</div>` + shot(s.img2, s.steps2) : '');
     stageEl.innerHTML = `<div class="wrap">
       <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
-      ${stepsList}
       ${shots}
       ${svc}</div>`;
   }
