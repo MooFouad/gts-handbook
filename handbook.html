@@ -124,9 +124,12 @@
   .browser .url{ flex:1; background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:5px 12px; font-family:var(--mono);
     font-size:12px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .browser + .browser{ margin-top:26px; }
-  .shot2label{ margin:26px auto 8px; max-width:1160px; font-family:var(--body); font-size:13px; font-weight:600; letter-spacing:.1em;
-    text-transform:uppercase; color:var(--amber-deep); }
-  .shot2label:empty{ display:none; }
+  .shotlabel{ margin:26px auto 8px; max-width:1160px; font-family:var(--body); font-size:13px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--amber-deep); display:flex; align-items:center; gap:9px; }
+  .shotlabel:empty{ display:none; }
+  .shotlabel .num{ flex:0 0 auto; width:19px; height:19px; border-radius:50%; background:var(--amber-deep); color:#fff;
+    font-family:var(--disp); font-size:11px; line-height:19px; text-align:center; letter-spacing:0; text-transform:none; }
+  .wrap > .shotlabel:first-child{ margin-top:2px; }
   .browser img{ display:block; width:100%; height:auto; min-height:200px; background:linear-gradient(100deg,#F3F0EA 30%,#F9F7F2 50%,#F3F0EA 70%);
     background-size:200% 100%; animation:imgIn .85s cubic-bezier(.2,.7,.2,1) .22s both, shimmer 1.3s ease-in-out infinite; }
   .browser img.loaded{ animation:imgIn .85s cubic-bezier(.2,.7,.2,1) .22s both; background:none; min-height:0; }
@@ -149,6 +152,7 @@
   @keyframes callIn{ from{ opacity:0; } to{ opacity:1; } }
   .marks .call.r{ flex-direction:row-reverse; text-align:right; }
   .marks .call b{ color:var(--ink); font-weight:700; }
+  .marks .call bdi{ white-space:nowrap; }
   .marks .call .sn{ flex:0 0 auto; width:21px; height:21px; border-radius:50%; background:#E4002B; color:#fff;
     font-family:var(--disp); font-weight:800; font-size:11.5px; display:flex; align-items:center; justify-content:center;
     box-shadow:0 2px 6px rgba(228,0,43,.4); }
@@ -286,58 +290,58 @@ const SLIDES = [
   en:{title:"Attendance", cap:"Check-in/out history and a colour-coded monthly calendar."},
   ar:{title:"الحضور", cap:"سجل الحضور والانصراف وتقويم شهري ملوّن حسب الحالة."}},
  {tag:"People & Time",url:"app.gts.sa/Employee/JoinReports",img:"page_joinreports_create",
-  en:{title:"Join Reports", cap:"Confirm you've (re)joined work — on hire, or back from leave. Here's how to submit one:"},
-  ar:{title:"تقارير الانضمام", cap:"أكّد مباشرتك للعمل — عند التعيين أو العودة من إجازة. إليك طريقة التقديم:"},
+  en:{title:"Join Reports", cap:"Confirm you've (re)joined work — on hire, or back from leave. Here's how to submit one:", part1:"How to submit a join report"},
+  ar:{title:"تقارير الانضمام", cap:"أكّد مباشرتك للعمل — عند التعيين أو العودة من إجازة. إليك طريقة التقديم:", part1:"طريقة تقديم تقرير انضمام"},
   steps:[
    {n:1, tx:85.4, ty:16.4, bx:74, by:16.4, en:"Click the <b>+</b> icon to start a new join report.", ar:"اضغط على أيقونة <b>+</b> لبدء تقرير انضمام جديد."},
-   {n:2, tx:31.9, ty:45.5, bx:16, by:45.5, en:"Set the <b>Join Date</b> — the day you (re)started work.", ar:"حدّد <b>تاريخ المباشرة</b> — يوم بدء أو استئناف العمل."},
+   {n:2, tx:31.9, ty:45.5, bx:22, by:45.5, en:"Set the <b>Join Date</b> — the day you (re)started work.", ar:"حدّد <b>تاريخ المباشرة</b> — يوم بدء أو استئناف العمل."},
    {n:3, tx:58.1, ty:45.5, bx:72, by:40, en:"If it's a return from leave, pick the <b>Related Vacation Request</b>.", ar:"إن كان عودة من إجازة، اختر <b>طلب الإجازة المرتبط</b>."},
-   {n:4, tx:65.7, ty:49.1, bx:78, by:53, en:"Click <b>ADD</b> — then it goes to your Direct Manager and HR for approval.", ar:"اضغط <b>ADD</b> — ثم يُرسل لمديرك المباشر والموارد البشرية للاعتماد."},
+   {n:4, tx:65.7, ty:49.1, bx:78, by:53, en:"Click <b>ADD</b> — then it goes to your Direct Manager and HR for approval.", ar:"اضغط <b><bdi>ADD</bdi></b> — ثم يُرسل لمديرك المباشر والموارد البشرية للاعتماد."},
   ]},
  {tag:"People & Time",url:"app.gts.sa/Employee/Statistics",img:"page_statistics",
   en:{title:"My Statistics", cap:"Your attendance scorecard — an overall rate plus the breakdown behind it."},
   ar:{title:"إحصائياتي", cap:"ملخص أدائك في الحضور — نسبة إجمالية وتفاصيلها."}},
 
  {tag:"Money",url:"app.gts.sa/employee/paymentrequests",img:"page_pay_create",
-  en:{title:"Payment Requests", cap:"Reimbursement requests. Here's how to create one:", sub2:"Then, back in the list:"},
-  ar:{title:"طلبات الصرف", cap:"طلبات استرداد المصروفات. إليك طريقة إنشاء طلب:", sub2:"ثم في القائمة:"},
+  en:{title:"Payment Requests", cap:"Reimbursement requests. Here's how to create one:", part1:"Create the request", part2:"Attach your file"},
+  ar:{title:"طلبات الصرف", cap:"طلبات استرداد المصروفات. إليك طريقة إنشاء طلب:", part1:"إنشاء الطلب", part2:"إرفاق الملف"},
   steps:[
    {n:1, tx:87, ty:30, bx:75, by:22, en:"Click <b>+</b> to start a new request.", ar:"اضغط <b>+</b> لبدء طلب جديد."},
-   {n:2, tx:48.6, ty:16.8, bx:21, by:16.8, en:"Pick the <b>Beneficiary</b> (or add one).", ar:"اختر <b>المستفيد</b> (أو أضف واحداً)."},
-   {n:3, tx:50, ty:22.8, bx:21, by:22.8, en:"Pick the <b>Department</b>.", ar:"اختر <b>القسم</b>."},
+   {n:2, tx:48.6, ty:16.8, bx:35.6, by:16.8, en:"Pick the <b>Beneficiary</b> (or add one).", ar:"اختر <b>المستفيد</b> (أو أضف واحداً)."},
+   {n:3, tx:50, ty:22.8, bx:37, by:22.8, en:"Pick the <b>Department</b>.", ar:"اختر <b>القسم</b>."},
    {n:4, tx:31.7, ty:28.8, bx:21, by:28.8, en:"Enter the <b>Amount</b>.", ar:"أدخل <b>المبلغ</b>."},
-   {n:5, tx:50, ty:34.8, bx:21, by:34.8, en:"Write the reason in <b>Description</b>.", ar:"اكتب السبب في <b>الوصف</b>."},
-   {n:6, tx:48.6, ty:39.4, bx:21, by:39.4, en:"Set <b>Account</b> — who bears the cost.", ar:"حدّد <b>الحساب</b> — من يتحمل التكلفة."},
-   {n:7, tx:71.5, ty:56.8, bx:87, by:62, en:"Click <b>ADD</b> to create it.", ar:"اضغط <b>ADD</b> للإنشاء."},
+   {n:5, tx:50, ty:34.8, bx:37, by:34.8, en:"Write the reason in <b>Description</b>.", ar:"اكتب السبب في <b>الوصف</b>."},
+   {n:6, tx:48.6, ty:39.4, bx:60, by:39.4, en:"Set <b>Account</b> — who bears the cost.", ar:"حدّد <b>الحساب</b> — من يتحمل التكلفة."},
+   {n:7, tx:68.7, ty:49.7, bx:80, by:58, en:"Click <b>ADD</b> to create it.", ar:"اضغط <b><bdi>ADD</bdi></b> للإنشاء."},
   ],
   img2:"page_pay_attach",
   steps2:[
-   {n:8, tx:61, ty:39, bx:41, by:31, en:"Click <b>+</b> in the <b>Scan</b> column to attach your file.", ar:"اضغط <b>+</b> في عمود <b>Scan</b> لإرفاق ملفك."},
+   {n:8, tx:61, ty:39, bx:48, by:31, en:"Click <b>+</b> in the <b>Scan</b> column to attach your file.", ar:"اضغط <b>+</b> في عمود <b><bdi>Scan</bdi></b> لإرفاق ملفك."},
   ]},
  {tag:"Money",url:"app.gts.sa/Employee/Payroll",img:"page_payroll",
   en:{title:"Payroll", cap:"Your full salary breakdown — attendance, deductions, daily rates, and the payable total."},
   ar:{title:"كشف الرواتب", cap:"تفاصيل راتبك كاملة — الحضور، الخصومات، المعدلات اليومية، والإجمالي المستحق."}},
  {tag:"Money",url:"app.gts.sa/employee/mypettycash",img:"page_pettycash_create",
-  en:{title:"Petty Cash", cap:"Cash advanced to you for work costs. Here's how to request it:"},
-  ar:{title:"العهدة", cap:"مبالغ نقدية مقدّمة لمصاريف العمل. إليك طريقة الطلب:"},
+  en:{title:"Petty Cash", cap:"Cash advanced to you for work costs. Here's how to request it:", part1:"How to request petty cash"},
+  ar:{title:"العهدة", cap:"مبالغ نقدية مقدّمة لمصاريف العمل. إليك طريقة الطلب:", part1:"طريقة طلب عهدة"},
   steps:[
-   {n:1, tx:69.9, ty:6.7, bx:59, by:6.7, en:"Click <b>REQUEST PETTY CASH</b>.", ar:"اضغط <b>REQUEST PETTY CASH</b> (طلب عهدة)."},
-   {n:2, tx:45, ty:44, bx:28, by:44, en:"Enter the <b>Amount</b>.", ar:"أدخل <b>المبلغ</b>."},
-   {n:3, tx:45, ty:46.6, bx:28, by:46.6, en:"Enter the <b>Project Name</b>.", ar:"أدخل <b>اسم المشروع</b>."},
-   {n:4, tx:52.4, ty:49.3, bx:64, by:49.3, en:"Click <b>CREATE</b>.", ar:"اضغط <b>CREATE</b> (إنشاء)."},
+   {n:1, tx:69.9, ty:6.7, bx:59, by:6.7, en:"Click <b>REQUEST PETTY CASH</b>.", ar:"اضغط <b><bdi>REQUEST PETTY CASH</bdi></b> (طلب عهدة)."},
+   {n:2, tx:45, ty:44, bx:32, by:40, en:"Enter the <b>Amount</b>.", ar:"أدخل <b>المبلغ</b>."},
+   {n:3, tx:45, ty:46.6, bx:32, by:51, en:"Enter the <b>Project Name</b>.", ar:"أدخل <b>اسم المشروع</b>."},
+   {n:4, tx:52.4, ty:49.3, bx:64, by:49.3, en:"Click <b>CREATE</b>.", ar:"اضغط <b><bdi>CREATE</bdi></b> (إنشاء)."},
   ]},
 
  {tag:"Travel & Mobility",url:"app.gts.sa/Employee/BusinessTripRequests",img:"page_businesstrips_create",
-  en:{title:"Business Trips", cap:"Request company travel. Here's how to submit a trip:"},
-  ar:{title:"رحلات العمل", cap:"طلب سفر رسمي. إليك طريقة تقديم رحلة:"},
+  en:{title:"Business Trips", cap:"Request company travel. Here's how to submit a trip:", part1:"How to submit a trip"},
+  ar:{title:"رحلات العمل", cap:"طلب سفر رسمي. إليك طريقة تقديم رحلة:", part1:"طريقة تقديم رحلة"},
   steps:[
    {n:1, tx:85.4, ty:5.2, bx:74, by:5.2, en:"Click <b>+</b> for a new trip.", ar:"اضغط <b>+</b> لرحلة جديدة."},
-   {n:2, tx:45, ty:36.7, bx:20, by:36.7, en:"Set if <b>abroad</b> and if <b>exit/re-entry</b> is needed.", ar:"حدّد إن كانت <b>خارج المملكة</b> وهل تلزم <b>خروج وعودة</b>."},
-   {n:3, tx:45, ty:42, bx:20, by:42, en:"Enter <b>From</b> and <b>To</b> locations.", ar:"أدخل موقعي <b>من</b> و<b>إلى</b>."},
-   {n:4, tx:45, ty:47.1, bx:20, by:47.1, en:"Set <b>From</b> and <b>To</b> dates.", ar:"حدّد تاريخي <b>البداية</b> و<b>النهاية</b>."},
-   {n:5, tx:45, ty:52.3, bx:20, by:52.3, en:"Tick <b>Petty Cash</b> / <b>Air Ticket</b> if needed.", ar:"فعّل <b>العهدة</b> / <b>تذكرة الطيران</b> عند الحاجة."},
-   {n:6, tx:45, ty:57.4, bx:20, by:57.4, en:"Add any <b>Comments</b>.", ar:"أضف <b>ملاحظات</b>."},
-   {n:7, tx:65.7, ty:61.8, bx:78, by:61.8, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
+   {n:2, tx:45, ty:36.7, bx:32, by:36.7, en:"Set if <b>abroad</b> and if <b>exit/re-entry</b> is needed.", ar:"حدّد إن كانت <b>خارج المملكة</b> وهل تلزم <b>خروج وعودة</b>."},
+   {n:3, tx:45, ty:42, bx:32, by:42, en:"Enter <b>From</b> and <b>To</b> locations.", ar:"أدخل موقعي <b>من</b> و<b>إلى</b>."},
+   {n:4, tx:45, ty:47.1, bx:32, by:47.1, en:"Set <b>From</b> and <b>To</b> dates.", ar:"حدّد تاريخي <b>البداية</b> و<b>النهاية</b>."},
+   {n:5, tx:45, ty:52.3, bx:32, by:52.3, en:"Tick <b>Petty Cash</b> / <b>Air Ticket</b> if needed.", ar:"فعّل <b>العهدة</b> / <b>تذكرة الطيران</b> عند الحاجة."},
+   {n:6, tx:45, ty:57.4, bx:32, by:57.4, en:"Add any <b>Comments</b>.", ar:"أضف <b>ملاحظات</b>."},
+   {n:7, tx:65.7, ty:61.8, bx:78, by:61.8, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b><bdi>ADD</bdi></b> للإرسال."},
   ]},
  {tag:"Travel & Mobility",url:"app.gts.sa/Employee/AirTickets",img:"page_airtickets",
   en:{title:"Air Tickets", cap:"Flight bookings for your trips — created automatically when you tick “Require Air Ticket” on a Business Trip request. This page tracks them."},
@@ -347,46 +351,46 @@ const SLIDES = [
   ar:{title:"خروج وعودة", cap:"تأشيرات الخروج والعودة — تُنشأ عند تفعيل «خروج وعودة» في طلب رحلة عمل أو إجازة. هذه الصفحة لمتابعتها."}},
 
  {tag:"Leave & Cover",url:"app.gts.sa/Employee/EmployeeLeaveRequests",img:"page_leave_create",
-  en:{title:"Leave Requests", cap:"Short leaves and work-from-home days. Here's how to submit one:"},
-  ar:{title:"طلبات المغادرة", cap:"مغادرات قصيرة أو عمل من المنزل. إليك طريقة التقديم:"},
+  en:{title:"Leave Requests", cap:"Short leaves and work-from-home days. Here's how to submit one:", part1:"How to submit a leave request"},
+  ar:{title:"طلبات المغادرة", cap:"مغادرات قصيرة أو عمل من المنزل. إليك طريقة التقديم:", part1:"طريقة تقديم طلب مغادرة"},
   steps:[
    {n:1, tx:82.7, ty:7.2, bx:71, by:7.2, en:"Click the <b>+</b> icon to start a new leave request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب مغادرة جديد."},
-   {n:2, tx:45, ty:33.8, bx:14, by:33.8, en:"Choose the <b>Leave Type</b> — Emergency, Sick, Early, Late, or Work From Home.", ar:"اختر <b>نوع الإجازة</b> — طارئة، مرضية، مبكرة، تأخير، أو عمل من المنزل."},
-   {n:3, tx:45, ty:43.2, bx:14, by:43.2, en:"Pick the <b>Leave Period</b> — the From and To dates.", ar:"حدّد <b>فترة الإجازة</b> — تاريخ البداية والنهاية."},
-   {n:4, tx:32.5, ty:47.3, bx:14, by:47.3, en:"Add a <b>Destination</b> if relevant (optional).", ar:"أضف <b>الوجهة</b> إن لزم (اختياري)."},
-   {n:5, tx:45, ty:57.7, bx:14, by:57.7, en:"Add a <b>Memo</b> with any details (optional).", ar:"أضف <b>ملاحظة</b> بأي تفاصيل (اختياري)."},
-   {n:6, tx:65.7, ty:64, bx:78, by:64, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
+   {n:2, tx:45, ty:33.8, bx:32, by:33.8, en:"Choose the <b>Leave Type</b> — Emergency, Sick, Early, Late, or Work From Home.", ar:"اختر <b>نوع الإجازة</b> — طارئة، مرضية، مبكرة، تأخير، أو عمل من المنزل."},
+   {n:3, tx:45, ty:43.2, bx:32, by:43.2, en:"Pick the <b>Leave Period</b> — the From and To dates.", ar:"حدّد <b>فترة الإجازة</b> — تاريخ البداية والنهاية."},
+   {n:4, tx:32.5, ty:47.3, bx:22, by:47.3, en:"Add a <b>Destination</b> if relevant (optional).", ar:"أضف <b>الوجهة</b> إن لزم (اختياري)."},
+   {n:5, tx:45, ty:57.7, bx:32, by:57.7, en:"Add a <b>Memo</b> with any details (optional).", ar:"أضف <b>ملاحظة</b> بأي تفاصيل (اختياري)."},
+   {n:6, tx:65.7, ty:64, bx:78, by:64, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b><bdi>ADD</bdi></b> للإرسال."},
   ]},
  {tag:"Leave & Cover",url:"app.gts.sa/Employee/EmployeeVacations",img:"page_vacations_create",
-  en:{title:"Vacations", cap:"Annual leave. Here's how to submit a vacation request:"},
-  ar:{title:"الإجازات", cap:"الإجازة السنوية. إليك طريقة تقديم طلب إجازة:"},
+  en:{title:"Vacations", cap:"Annual leave. Here's how to submit a vacation request:", part1:"How to submit a vacation request"},
+  ar:{title:"الإجازات", cap:"الإجازة السنوية. إليك طريقة تقديم طلب إجازة:", part1:"طريقة تقديم طلب إجازة"},
   steps:[
    {n:1, tx:82.7, ty:7.2, bx:71, by:7.2, en:"Click the <b>+</b> icon to start a new vacation request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب إجازة جديد."},
-   {n:2, tx:31.8, ty:24.1, bx:15, by:24.1, en:"Choose <b>Regular</b> or <b>Emergency</b> vacation.", ar:"اختر إجازة <b>عادية</b> أو <b>طارئة</b>."},
-   {n:3, tx:45, ty:33, bx:15, by:33, en:"Pick the <b>Vacation Period</b> (From – To).", ar:"حدّد <b>فترة الإجازة</b> (من – إلى)."},
-   {n:4, tx:45, ty:37.2, bx:15, by:37.2, en:"Set <b>From City</b>, <b>To City</b>, or an other destination.", ar:"حدّد <b>مدينة المغادرة</b> و<b>مدينة الوصول</b> أو وجهة أخرى."},
-   {n:5, tx:45, ty:51, bx:15, by:51, en:"Tick <b>Require Exit Re-entry</b> / <b>Air Ticket</b> and the two confirmations if they apply.", ar:"فعّل <b>خروج وعودة</b> / <b>تذكرة طيران</b> والإقرارين إن انطبقا."},
-   {n:6, tx:65.7, ty:74.6, bx:78, by:74.6, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
+   {n:2, tx:31.8, ty:24.1, bx:22, by:24.1, en:"Choose <b>Regular</b> or <b>Emergency</b> vacation.", ar:"اختر إجازة <b>عادية</b> أو <b>طارئة</b>."},
+   {n:3, tx:45, ty:33, bx:32, by:33, en:"Pick the <b>Vacation Period</b> (From – To).", ar:"حدّد <b>فترة الإجازة</b> (من – إلى)."},
+   {n:4, tx:45, ty:37.2, bx:32, by:37.2, en:"Set <b>From City</b>, <b>To City</b>, or an other destination.", ar:"حدّد <b>مدينة المغادرة</b> و<b>مدينة الوصول</b> أو وجهة أخرى."},
+   {n:5, tx:45, ty:51, bx:32, by:51, en:"Tick <b>Require Exit Re-entry</b> / <b>Air Ticket</b> and the two confirmations if they apply.", ar:"فعّل <b>خروج وعودة</b> / <b>تذكرة طيران</b> والإقرارين إن انطبقا."},
+   {n:6, tx:65.7, ty:74.6, bx:78, by:74.6, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b><bdi>ADD</bdi></b> للإرسال."},
   ]},
  {tag:"Leave & Cover",url:"app.gts.sa/Employee/InsuranceRequests",img:"page_insurance_create",
-  en:{title:"Insurance Requests", cap:"Add yourself or a dependant to the company medical insurance:"},
-  ar:{title:"طلبات التأمين", cap:"أضف نفسك أو أحد المعالين إلى التأمين الطبي للشركة:"},
+  en:{title:"Insurance Requests", cap:"Add yourself or a dependant to the company medical insurance:", part1:"How to add a dependant"},
+  ar:{title:"طلبات التأمين", cap:"أضف نفسك أو أحد المعالين إلى التأمين الطبي للشركة:", part1:"طريقة إضافة معال"},
   steps:[
    {n:1, tx:85.4, ty:5.2, bx:74, by:5.2, en:"Click the <b>+</b> icon to start a new insurance request.", ar:"اضغط على أيقونة <b>+</b> لبدء طلب تأمين جديد."},
-   {n:2, tx:45, ty:41.1, bx:18, by:41.1, en:"Select the <b>Dependent Name</b> to add to the medical insurance.", ar:"اختر <b>اسم المعال</b> لإضافته إلى التأمين الطبي."},
-   {n:3, tx:45, ty:46.8, bx:18, by:46.8, en:"Download the declaration form, fill it, and <b>upload</b> it here — required.", ar:"نزّل نموذج الإقرار واملأه ثم <b>ارفعه</b> هنا — إلزامي."},
-   {n:4, tx:65.7, ty:52.7, bx:78, by:52.7, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b>ADD</b> للإرسال."},
+   {n:2, tx:45, ty:41.1, bx:32, by:41.1, en:"Select the <b>Dependent Name</b> to add to the medical insurance.", ar:"اختر <b>اسم المعال</b> لإضافته إلى التأمين الطبي."},
+   {n:3, tx:45, ty:46.8, bx:32, by:46.8, en:"Download the declaration form, fill it, and <b>upload</b> it here — required.", ar:"نزّل نموذج الإقرار واملأه ثم <b>ارفعه</b> هنا — إلزامي."},
+   {n:4, tx:65.7, ty:52.7, bx:78, by:52.7, en:"Click <b>ADD</b> to submit.", ar:"اضغط <b><bdi>ADD</bdi></b> للإرسال."},
   ]},
 
  {tag:"Support & Growth",url:"app.gts.sa/Employee/Tickets",img:"page_support_create",
-  en:{title:"Support Tickets", cap:"Ask HR or IT for help. Open the + button (bottom-left) to get this form, then:"},
-  ar:{title:"تذاكر الدعم", cap:"اطلب المساعدة من الموارد البشرية أو تقنية المعلومات. اضغط زر + (أسفل اليسار) لفتح هذا النموذج، ثم:"},
+  en:{title:"Support Tickets", cap:"Ask HR or IT for help. Open the + button (bottom-left) to get this form, then:", part1:"How to open a ticket"},
+  ar:{title:"تذاكر الدعم", cap:"اطلب المساعدة من الموارد البشرية أو تقنية المعلومات. اضغط زر + (أسفل اليسار) لفتح هذا النموذج، ثم:", part1:"طريقة فتح تذكرة"},
   steps:[
-   {n:1, tx:27.8, ty:20.1, bx:14, by:20.1, en:"Enter a clear <b>Title</b> for your ticket.", ar:"أدخل <b>عنواناً</b> واضحاً للتذكرة."},
-   {n:2, tx:27.8, ty:28.5, bx:14, by:28.5, en:"Describe the issue in <b>Description</b>.", ar:"اشرح المشكلة في حقل <b>الوصف</b>."},
+   {n:1, tx:27.8, ty:20.1, bx:22, by:20.1, en:"Enter a clear <b>Title</b> for your ticket.", ar:"أدخل <b>عنواناً</b> واضحاً للتذكرة."},
+   {n:2, tx:27.8, ty:28.5, bx:22, by:28.5, en:"Describe the issue in <b>Description</b>.", ar:"اشرح المشكلة في حقل <b>الوصف</b>."},
    {n:3, tx:53.5, ty:18.6, bx:44, by:14, en:"Choose the <b>Ticket Type</b> — HR or IT.", ar:"اختر <b>نوع التذكرة</b> — موارد بشرية أو تقنية معلومات."},
-   {n:4, tx:62.2, ty:23.4, bx:88, by:23.4, en:"Pick a <b>Topic</b> and a <b>Priority</b>.", ar:"اختر <b>الموضوع</b> و<b>الأولوية</b>."},
-   {n:5, tx:74, ty:37.6, bx:88, by:37.6, en:"Click <b>SUBMIT TICKET</b>.", ar:"اضغط <b>SUBMIT TICKET</b> (إرسال التذكرة)."},
+   {n:4, tx:62.2, ty:23.4, bx:75.2, by:23.4, en:"Pick a <b>Topic</b> and a <b>Priority</b>.", ar:"اختر <b>الموضوع</b> و<b>الأولوية</b>."},
+   {n:5, tx:74, ty:37.6, bx:88, by:37.6, en:"Click <b>SUBMIT TICKET</b>.", ar:"اضغط <b><bdi>SUBMIT TICKET</bdi></b> (إرسال التذكرة)."},
   ]},
  {tag:"Support & Growth",url:"app.gts.sa/Employee/MyPerformanceReviews",img:"page_performance",
   en:{title:"Performance Reviews", cap:"Your evaluation history — and your team's, if you manage people."},
@@ -404,46 +408,52 @@ const SLIDES = [
    {en:["Leave Request","Pick a leave type and a date range."], ar:["طلب إجازة","اختر نوع الإجازة والفترة الزمنية."]},
   ]},
  {tag:"Requests",url:"app.gts.sa:446/TempDashboard",img:"page_form_admin",
-  en:{title:"Admin Service Request — the form", cap:"Your name, ID, sponsor, and Iqama details are pre-filled; pick one of these Service Types and submit."},
-  ar:{title:"طلب خدمة إدارية — النموذج", cap:"اسمك ورقم هويتك وكفيلك وبيانات الإقامة مُعبّأة مسبقاً؛ اختر أحد أنواع الخدمة التالية ثم أرسل."},
-  svc:[
-   {en:["Salary Slip",""], ar:["كشف الراتب",""]},
-   {en:["Salary Definition",""], ar:["تعريف بالراتب",""]},
-   {en:["Experience Certificate",""], ar:["شهادة خبرة",""]},
-   {en:["Clearance",""], ar:["إخلاء طرف",""]},
-   {en:["Family Visit / COC Approval",""], ar:["موافقة زيارة عائلية / الغرفة التجارية",""]},
-   {en:["Tamm Driving Permit",""], ar:["تصريح قيادة تم",""]},
+  en:{title:"Admin Service Request — the form", cap:"Your name, ID, sponsor, and Iqama details are pre-filled; pick one of these Service Types and submit.", part1:"How to submit this request"},
+  ar:{title:"طلب خدمة إدارية — النموذج", cap:"اسمك ورقم هويتك وكفيلك وبيانات الإقامة مُعبّأة مسبقاً؛ اختر أحد أنواع الخدمة التالية ثم أرسل.", part1:"طريقة تقديم هذا الطلب"},
+  steps:[
+   {n:1, tx:69, ty:9.8, bx:80, by:9.8, en:"Choose the <b>Service Type</b>: Salary Slip, Salary Definition, Experience Certificate, Clearance, Family Visit/COC Approval, or Tamm Driving Permit.", ar:"اختر <b>نوع الخدمة</b>: كشف الراتب، تعريف بالراتب، شهادة خبرة، إخلاء طرف، موافقة زيارة عائلية/الغرفة التجارية، أو تصريح قيادة تم."},
+   {n:2, tx:67, ty:55.7, bx:80, by:55.7, en:"Your details are pre-filled — review them, then click <b>SUBMIT</b>.", ar:"بياناتك معبأة مسبقاً — راجعها ثم اضغط <b><bdi>SUBMIT</bdi></b>."},
   ]},
  {tag:"Requests",url:"app.gts.sa:446/TempDashboard",img:"page_form_insurance",
-  en:{title:"Medical Insurance Addition — the form", cap:"Choose Contractual, Personal, or Modify Class, confirm your details, then list the person(s) to add."},
-  ar:{title:"إضافة تأمين طبي — النموذج", cap:"اختر تعاقدية أو شخصية أو تعديل فئة، تأكد من بياناتك، ثم أضف الأشخاص المطلوب إضافتهم."}},
+  en:{title:"Medical Insurance Addition — the form", cap:"Choose Contractual, Personal, or Modify Class, confirm your details, then list the person(s) to add.", part1:"How to submit this request"},
+  ar:{title:"إضافة تأمين طبي — النموذج", cap:"اختر تعاقدية أو شخصية أو تعديل فئة، تأكد من بياناتك، ثم أضف الأشخاص المطلوب إضافتهم.", part1:"طريقة تقديم هذا الطلب"},
+  steps:[
+   {n:1, tx:45, ty:11.4, bx:58, by:11.4, en:"Pick the <b>Request Type</b> — Contractual, Personal, or Modify Class.", ar:"اختر <b>نوع الطلب</b> — تعاقدية أو شخصية أو تعديل فئة."},
+   {n:2, tx:67, ty:55.7, bx:80, by:55.7, en:"Confirm your details, list the person(s) to add, then click <b>SUBMIT</b>.", ar:"تأكد من بياناتك، أضف الأشخاص المطلوب إضافتهم، ثم اضغط <b><bdi>SUBMIT</bdi></b>."},
+  ]},
  {tag:"Requests",url:"app.gts.sa:446/TempDashboard",img:"page_form_govrelations",
-  en:{title:"Government Relations — the form", cap:"Same pre-filled identity block, plus one of these government-transaction Service Types."},
-  ar:{title:"العلاقات الحكومية — النموذج", cap:"نفس بيانات الهوية المُعبّأة مسبقاً، مع اختيار أحد أنواع الخدمات الحكومية التالية."},
-  svc:[
-   {en:["Transfer Data",""], ar:["نقل البيانات",""]},
-   {en:["Sponsor Transfer",""], ar:["نقل الكفالة",""]},
-   {en:["Iqama Renewal",""], ar:["تجديد الإقامة",""]},
-   {en:["New Iqama",""], ar:["إقامة جديدة",""]},
-   {en:["Exit Re-Entry Visa",""], ar:["تأشيرة خروج وعودة",""]},
-   {en:["Dependent Addition",""], ar:["إضافة معال",""]},
+  en:{title:"Government Relations — the form", cap:"Same pre-filled identity block, plus one of these government-transaction Service Types.", part1:"How to submit this request"},
+  ar:{title:"العلاقات الحكومية — النموذج", cap:"نفس بيانات الهوية المُعبّأة مسبقاً، مع اختيار أحد أنواع الخدمات الحكومية التالية.", part1:"طريقة تقديم هذا الطلب"},
+  steps:[
+   {n:1, tx:69, ty:9.8, bx:80, by:9.8, en:"Choose the <b>Service Type</b>: Transfer Data, Sponsor Transfer, Iqama Renewal, New Iqama, Exit Re-Entry Visa, or Dependent Addition.", ar:"اختر <b>نوع الخدمة</b>: نقل البيانات، نقل الكفالة، تجديد الإقامة، إقامة جديدة، تأشيرة خروج وعودة، أو إضافة معال."},
+   {n:2, tx:67, ty:55.7, bx:80, by:55.7, en:"Your details are pre-filled — review them, then click <b>SUBMIT</b>.", ar:"بياناتك معبأة مسبقاً — راجعها ثم اضغط <b><bdi>SUBMIT</bdi></b>."},
   ]},
  {tag:"Requests",url:"app.gts.sa:446/TempDashboard",img:"page_form_other",
-  en:{title:"Other Questions — the form", cap:"A free-text question or request to HR, with an optional file attachment."},
-  ar:{title:"استفسارات أخرى — النموذج", cap:"سؤال أو طلب حر موجّه للموارد البشرية، مع إمكانية إرفاق ملف."}},
+  en:{title:"Other Questions — the form", cap:"A free-text question or request to HR, with an optional file attachment.", part1:"How to submit this request"},
+  ar:{title:"استفسارات أخرى — النموذج", cap:"سؤال أو طلب حر موجّه للموارد البشرية، مع إمكانية إرفاق ملف.", part1:"طريقة تقديم هذا الطلب"},
+  steps:[
+   {n:1, tx:69, ty:67.2, bx:80, by:67.2, en:"Type your <b>question or request</b>.", ar:"اكتب <b>سؤالك أو طلبك</b>."},
+   {n:2, tx:32, ty:78.6, bx:20, by:78.6, en:"Optionally add an <b>Attachment</b> (+).", ar:"أضف <b>مرفقاً</b> إن أردت (+)."},
+   {n:3, tx:67, ty:81.8, bx:80, by:81.8, en:"Click <b>SUBMIT</b>.", ar:"اضغط <b><bdi>SUBMIT</bdi></b>."},
+  ]},
  {tag:"Requests",url:"app.gts.sa:446/TempDashboard",img:"page_form_leave",
-  en:{title:"Leave Request — the form", cap:"Pick one of these Leave Types, a From/To date range, and an optional memo."},
-  ar:{title:"طلب إجازة — النموذج", cap:"اختر أحد أنواع الإجازة التالية، وتاريخ البداية والنهاية، مع إمكانية إضافة ملاحظة."},
-  svc:[
-   {en:["Emergency",""], ar:["طارئة",""]},
-   {en:["Sick Leave",""], ar:["إجازة مرضية",""]},
-   {en:["Early Leave",""], ar:["مغادرة مبكرة",""]},
-   {en:["Late Attendance",""], ar:["تأخير حضور",""]},
-   {en:["Work From Home",""], ar:["عمل من المنزل",""]},
+  en:{title:"Leave Request — the form", cap:"Pick one of these Leave Types, a From/To date range, and an optional memo.", part1:"How to submit this request"},
+  ar:{title:"طلب إجازة — النموذج", cap:"اختر أحد أنواع الإجازة التالية، وتاريخ البداية والنهاية، مع إمكانية إضافة ملاحظة.", part1:"طريقة تقديم هذا الطلب"},
+  steps:[
+   {n:1, tx:69, ty:59.7, bx:80, by:59.7, en:"Choose the <b>Leave Type</b>: Emergency, Sick Leave, Early Leave, Late Attendance, or Work From Home.", ar:"اختر <b>نوع الإجازة</b>: طارئة، إجازة مرضية، مغادرة مبكرة، تأخير حضور، أو عمل من المنزل."},
+   {n:2, tx:69, ty:71.6, bx:80, by:71.6, en:"Set the <b>From Date</b> and <b>To Date</b>.", ar:"حدّد <b>تاريخ البداية</b> و<b>تاريخ النهاية</b>."},
+   {n:3, tx:69, ty:81.1, bx:80, by:88, en:"Add a <b>Memo</b> if needed (optional).", ar:"أضف <b>ملاحظة</b> إن لزم (اختياري)."},
+   {n:4, tx:67, ty:86.7, bx:80, by:94, en:"Click <b>SUBMIT</b>.", ar:"اضغط <b><bdi>SUBMIT</bdi></b>."},
   ]},
  {tag:"Requests",url:"https://gts-form.vercel.app/",img:"page_form_chamber",
-  en:{title:"Chamber of Commerce Attestation — the form", cap:"OPEN PORTAL takes you to a separate site with its own form: your details, the attestation type, and four required document uploads."},
-  ar:{title:"تصديق الغرفة التجارية — النموذج", cap:"يفتح زر \"فتح البوابة\" موقعاً منفصلاً بنموذجه الخاص: بياناتك، نوع التصديق، وأربعة مستندات مطلوب رفعها."}},
+  en:{title:"Chamber of Commerce Attestation — the form", cap:"OPEN PORTAL takes you to a separate site with its own form: your details, the attestation type, and four required document uploads.", part1:"How to submit this request"},
+  ar:{title:"تصديق الغرفة التجارية — النموذج", cap:"يفتح زر \"فتح البوابة\" موقعاً منفصلاً بنموذجه الخاص: بياناتك، نوع التصديق، وأربعة مستندات مطلوب رفعها.", part1:"طريقة تقديم هذا الطلب"},
+  steps:[
+   {n:1, tx:25, ty:22.9, bx:20, by:18, en:"Fill in your <b>Name</b>, <b>Iqama/Job Number</b>, and <b>Department</b>.", ar:"املأ <b>الاسم</b>، <b>رقم الإقامة/الرقم الوظيفي</b>، و<b>القسم</b>."},
+   {n:2, tx:25, ty:45.7, bx:20, by:40, en:"Choose the <b>Category</b> and <b>Issuing Authority</b>, then describe the <b>Purpose</b>.", ar:"اختر <b>التصنيف</b> و<b>الجهة المصدر لها</b>، ثم اكتب <b>الغرض</b>."},
+   {n:3, tx:25, ty:67.9, bx:20, by:62, en:"Upload all four required documents: contract copy, ID photo, payment receipt, and introduction letter.", ar:"ارفع المستندات الأربعة المطلوبة: نسخة العقد، صورة الهوية، سند التحويل، وخطاب التعريف."},
+   {n:4, tx:44, ty:91.9, bx:31, by:84, en:"Click <b>إرسال الطلب</b> (Submit) to send it.", ar:"اضغط <b>إرسال الطلب</b> لإرسال الطلب."},
+  ]},
  {tag:"Requests",url:"app.gts.sa:446/MyRequests",img:"page_myrequests",
   en:{title:"My Requests", cap:"Everything you've submitted, with its live status and any note from HR."},
   ar:{title:"طلباتي", cap:"كل ما قدّمته من طلبات مع حالتها الحالية وملاحظات الموارد البشرية."}},
@@ -504,7 +514,8 @@ function renderStage(){
         : `<img src="img/${img}.jpg" alt="${c.title.replace(/<[^>]+>/g,'')}" loading="eager" onload="this.classList.add('loaded')">`;
       return `<div class="browser"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">${s.url}</div></div>${inner}</div>`;
     }
-    const shots = shot(s.img, s.steps) + (s.img2 ? `<div class="shot2label">${(c.sub2||'')}</div>` + shot(s.img2, s.steps2) : '');
+    function label(n, text){ return text ? `<div class="shotlabel"><span class="num">${n}</span>${text}</div>` : ''; }
+    const shots = label(1, c.part1) + shot(s.img, s.steps) + (s.img2 ? label(2, c.part2) + shot(s.img2, s.steps2) : '');
     stageEl.innerHTML = `<div class="wrap">
       <div class="head"><span class="tag">${s.tag}</span><h1>${c.title}</h1><p class="cap">${c.cap}</p></div>
       ${shots}
