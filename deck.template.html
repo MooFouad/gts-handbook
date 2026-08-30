@@ -164,8 +164,8 @@
   .cover-stage .box{ max-width:660px; animation:rise .9s cubic-bezier(.2,.7,.2,1) both; }
   .cover-stage .badge{ display:inline-flex; align-items:center; gap:8px; font-family:var(--body); font-size:12px; font-weight:600;
     letter-spacing:.16em; text-transform:uppercase; color:var(--amber-deep); background:var(--amber-soft); padding:7px 16px; border-radius:30px; margin-bottom:22px; }
-  .cover-stage h1{ font-family:var(--disp); font-size:clamp(34px,5.6vw,64px); line-height:1.5; margin:0 0 16px; font-weight:800; letter-spacing:-.035em; }
-  [dir="rtl"] .cover-stage h1{ font-family:var(--body); letter-spacing:0; line-height:1.5; }
+  .cover-stage h1{ font-family:var(--disp); font-size:clamp(34px,5.6vw,64px); line-height:1.25; margin:0 0 16px; font-weight:800; letter-spacing:-.035em; }
+  [dir="rtl"] .cover-stage h1{ font-family:var(--body); letter-spacing:0; line-height:1.25; }
   .cover-stage h1 em{ font-style:normal; color:var(--amber); }
   .cover-stage p{ font-size:17px; color:var(--ink-2); line-height:1.6; margin:0 auto; max-width:52ch; }
 
@@ -289,15 +289,9 @@ const SLIDES = [
  {tag:"People & Time",url:"app.gts.sa/Employee/Attendance",img:"page_attendance",
   en:{title:"Attendance", cap:"Check-in/out history and a colour-coded monthly calendar."},
   ar:{title:"الحضور", cap:"سجل الحضور والانصراف وتقويم شهري ملوّن حسب الحالة."}},
- {tag:"People & Time",url:"app.gts.sa/Employee/JoinReports",img:"page_joinreports_create",
-  en:{title:"Join Reports", cap:"Confirm you've (re)joined work — on hire, or back from leave. Here's how to submit one:", part1:"How to submit a join report"},
-  ar:{title:"تقارير الانضمام", cap:"أكّد مباشرتك للعمل — عند التعيين أو العودة من إجازة. إليك طريقة التقديم:", part1:"طريقة تقديم تقرير انضمام"},
-  steps:[
-   {n:1, tx:85.4, ty:16.4, bx:74, by:16.4, en:"Click the <b>+</b> icon to start a new join report.", ar:"اضغط على أيقونة <b>+</b> لبدء تقرير انضمام جديد."},
-   {n:2, tx:31.9, ty:45.5, bx:22, by:45.5, en:"Set the <b>Join Date</b> — the day you (re)started work.", ar:"حدّد <b>تاريخ المباشرة</b> — يوم بدء أو استئناف العمل."},
-   {n:3, tx:58.1, ty:45.5, bx:72, by:40, en:"If it's a return from leave, pick the <b>Related Vacation Request</b>.", ar:"إن كان عودة من إجازة، اختر <b>طلب الإجازة المرتبط</b>."},
-   {n:4, tx:65.7, ty:49.1, bx:78, by:53, en:"Click <b>ADD</b> — then it goes to your Direct Manager and HR for approval.", ar:"اضغط <b><bdi>ADD</bdi></b> — ثم يُرسل لمديرك المباشر والموارد البشرية للاعتماد."},
-  ]},
+ {tag:"People & Time",url:"app.gts.sa/Employee/JoinReports",img:"page_joinreports",
+  en:{title:"Join Reports", cap:"Confirms you've (re)joined work — on hire, or back from leave. Created by HR, not the employee; this page just tracks it."},
+  ar:{title:"تقارير الانضمام", cap:"تأكيد مباشرتك للعمل — عند التعيين أو العودة من إجازة. يُنشئها قسم الموارد البشرية وليس الموظف؛ هذه الصفحة لمتابعتها فقط."}},
  {tag:"People & Time",url:"app.gts.sa/Employee/Statistics",img:"page_statistics",
   en:{title:"My Statistics", cap:"Your attendance scorecard — an overall rate plus the breakdown behind it."},
   ar:{title:"إحصائياتي", cap:"ملخص أدائك في الحضور — نسبة إجمالية وتفاصيلها."}},
